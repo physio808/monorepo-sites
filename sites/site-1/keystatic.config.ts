@@ -2,12 +2,11 @@ import { config, collection, fields } from '@keystatic/core'
 
 export default config({
   storage: {
-    kind: 'github',
-    repo: {
-      owner: 'physio808',
-      name: 'monorepo-sites',
-    },
-    branchPrefix: 'keystatic/',
+    kind: 'cloud',
+  },
+
+  cloud: {
+    project: process.env.KEYSTATIC_CLOUD_PROJECT as string,
   },
 
   ui: {
@@ -26,18 +25,27 @@ export default config({
       schema: {
         title: fields.slug({ name: { label: 'Titre' } }),
         description: fields.text({
-          label: 'Description (meta SEO)',
+          label: 'Description (meta SEO — 50 à 160 caractères)',
           multiline: true,
           validation: { length: { min: 50, max: 160 } },
         }),
         pubDate: fields.date({ label: 'Date de publication' }),
-        author: fields.text({ label: 'Auteur', defaultValue: 'Équipe Sakaybrile' }),
+        author: fields.text({
+          label: 'Auteur',
+          defaultValue: 'Équipe Sakaybrile',
+        }),
         tags: fields.array(
           fields.text({ label: 'Tag' }),
           { label: 'Tags', itemLabel: props => props.value }
         ),
-        image: fields.text({ label: 'Image (URL ou chemin)', validation: { length: { min: 0, max: 255 } } }),
-        draft: fields.checkbox({ label: 'Brouillon', defaultValue: false }),
+        image: fields.text({
+          label: 'Image (chemin ou URL)',
+          validation: { length: { min: 0, max: 255 } },
+        }),
+        draft: fields.checkbox({
+          label: 'Brouillon (ne pas publier)',
+          defaultValue: false,
+        }),
         content: fields.markdoc({
           label: 'Contenu',
           extension: 'md',
