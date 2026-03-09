@@ -1,41 +1,73 @@
 ---
-import { supabase } from '../lib/supabase'
+import { getCollection } from 'astro:content'
+import SEO from '../components/SEO.astro'
 
-let articles: any[] = []
-let fetchError: string | null = null
-
-if (supabase) {
-  const { data, error } = await supabase
-    .from('articles')
-    .select('id, title, slug, meta_description, keyword, word_count, created_at')
-    .eq('status', 'published')
-    .order('created_at', { ascending: false })
-    .limit(10)
-  if (error) fetchError = error.message
-  else articles = data || []
-}
+const posts = await getCollection('blog', ({ data }) => !data.draft)
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 ---
 
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="google-site-verification" content="MIK0Jo6dxefDyCpfWb9b5TKPRMXAQjsEcftwu0uVV_I" />
-    <title>Site SEO</title>
+    <SEO
+      title="Blog SEO"
+      description="Articles SEO générés et optimisés automatiquement"
+      type="website"
+    />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.7; color: #1a1a1a; background: #fff; }
+      .container { max-width: 740px; margin: 0 auto; padding: 2rem 1.25rem; }
+      h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+      .subtitle { color: #6b7280; margin-bottom: 2.5rem; }
+      .posts { list-style: none; display: flex; flex-direction: column; gap: 1.75rem; }
+      .post { border-bottom: 1px solid #e5e7eb; padding-bottom: 1.75rem; }
+      .post:last-child { border-bottom: none; }
+      .post h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+      .post h2 a { color: #1a1a1a; text-decoration: none; }
+      .post h2 a:hover { color: #2563eb; }
+      .post p { color: #4b5563; font-size: 0.95rem; margin-bottom: 0.5rem; }
+      .meta { color: #9ca3af; font-size: 0.8rem; display: flex; gap: 0.75rem; }
+      .tags { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.5rem; }
+      .tag { background: #f3f4f6; padding: 0.1rem 0.45rem; border-radius: 4px; font-size: 0.75rem; color: #374151; }
+      .empty { color: #6b7280; text-align: center; padding: 3rem; }
+      footer { margin-top: 4rem; text-align: center; color: #9ca3af; font-size: 0.85rem; border-top: 1px solid #e5e7eb; padding-top: 2rem; }
+    </style>
   </head>
   <body>
-    <h1>Articles SEO</h1>
-    {fetchError && <p>Erreur: {fetchError}</p>}
-    {articles.length === 0 && <p>Aucun article publié pour l'instant.</p>}
-    <ul>
-      {articles.map(article => (
-        <li>
-          <a href={`/blog/${article.slug}/`}>{article.title}</a>
-          <p>{article.meta_description}</p>
-          <small>{article.word_count} mots · {new Date(article.created_at).toLocaleDateString('fr-FR')}</small>
-        </li>
-      ))}
-    </ul>
+    <div class="container">
+      <h1>Blog Sakaybrile</h1>
+      <p class="subtitle">Articles SEO optimisés</p>
+
+      {posts.length === 0 ? (
+        <p class="empty">Aucun article publié pour l'instant.</p>
+      ) : (
+        <ul class="posts">
+          {posts.map(post => (
+            <li class="post">
+              <h2><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h2>
+              <p>{post.data.description}</p>
+              <div class="meta">
+                <span>{post.data.pubDate.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                {post.data.author && <span>Par {post.data.author}</span>}
+              </div>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.map(tag => <span class="tag">{tag}</span>)}
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <footer>
+        <p>© {new Date().getFullYear()} Sakaybrile · Tous droits réservés</p>
+      </footer>
+    </div>
   </body>
 </html>

@@ -1,0 +1,72 @@
+---
+interface Props {
+  title: string
+  description: string
+  image?: string
+  url?: string
+  type?: 'website' | 'article'
+  pubDate?: Date
+  author?: string
+  tags?: string[]
+}
+
+const {
+  title,
+  description,
+  image = '/og-default.jpg',
+  url = Astro.url.href,
+  type = 'website',
+  pubDate,
+  author = 'Équipe Sakaybrile',
+  tags = [],
+} = Astro.props
+
+const siteName = 'Sakaybrile'
+const canonical = url
+
+const jsonLd = type === 'article' ? {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  image: image ? new URL(image, Astro.site).href : undefined,
+  datePublished: pubDate?.toISOString(),
+  author: { '@type': 'Person', name: author },
+  publisher: {
+    '@type': 'Organization',
+    name: siteName,
+    logo: { '@type': 'ImageObject', url: new URL('/favicon.ico', Astro.site).href },
+  },
+  keywords: tags.join(', '),
+  url: canonical,
+} : {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: Astro.site?.href,
+}
+---
+
+<!-- SEO de base -->
+<title>{title} | {siteName}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={siteName} />
+{image && <meta property="og:image" content={new URL(image, Astro.site).href} />}
+{pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+{tags.map(tag => <meta property="article:tag" content={tag} />)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{image && <meta name="twitter:image" content={new URL(image, Astro.site).href} />}
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

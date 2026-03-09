@@ -1,26 +1,92 @@
 ---
-const { frontmatter } = Astro.props;
+import SEO from '../components/SEO.astro'
+
+interface Props {
+  frontmatter?: {
+    title: string
+    description: string
+    pubDate: Date
+    author?: string
+    tags?: string[]
+    image?: string
+  }
+  // Support direct props (depuis [slug].astro)
+  title?: string
+  description?: string
+  pubDate?: Date
+  author?: string
+  tags?: string[]
+  image?: string
+}
+
+const fm = Astro.props.frontmatter ?? Astro.props
+const { title, description, pubDate, author, tags, image } = fm
 ---
 
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={frontmatter.description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="google-site-verification" content="MIK0Jo6dxefDyCpfWb9b5TKPRMXAQjsEcftwu0uVV_I" />
-    <title>{frontmatter.title}</title>
+    <SEO
+      title={title}
+      description={description}
+      type="article"
+      pubDate={pubDate instanceof Date ? pubDate : new Date(pubDate ?? '')}
+      author={author}
+      tags={tags}
+      image={image}
+    />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.7; color: #1a1a1a; background: #fff; }
+      .container { max-width: 740px; margin: 0 auto; padding: 2rem 1.25rem; }
+      nav { margin-bottom: 2rem; }
+      nav a { color: #2563eb; text-decoration: none; font-size: 0.9rem; }
+      nav a:hover { text-decoration: underline; }
+      header { margin-bottom: 2.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 1.5rem; }
+      h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700; line-height: 1.25; margin-bottom: 0.75rem; }
+      .meta { color: #6b7280; font-size: 0.875rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+      .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
+      .tag { background: #f3f4f6; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.8rem; color: #374151; }
+      article { font-size: 1.05rem; }
+      article h2 { font-size: 1.5rem; font-weight: 600; margin: 2rem 0 0.75rem; }
+      article h3 { font-size: 1.2rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+      article p { margin-bottom: 1.25rem; }
+      article ul, article ol { margin: 0 0 1.25rem 1.5rem; }
+      article li { margin-bottom: 0.4rem; }
+      article a { color: #2563eb; }
+      article blockquote { border-left: 4px solid #2563eb; padding: 0.5rem 1rem; margin: 1.25rem 0; color: #4b5563; background: #f8fafc; }
+      article code { background: #f3f4f6; padding: 0.15rem 0.35rem; border-radius: 3px; font-size: 0.9em; }
+      article pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.25rem; }
+      article pre code { background: none; padding: 0; }
+      article img { max-width: 100%; border-radius: 8px; margin: 1.25rem 0; }
+      footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e5e7eb; text-align: center; color: #9ca3af; font-size: 0.85rem; }
+    </style>
   </head>
   <body>
-    <header>
-      <a href="/">← Accueil</a>
-    </header>
-    <main>
-      <h1>{frontmatter.title}</h1>
-      <time>{frontmatter.pubDate}</time>
+    <div class="container">
+      <nav><a href="/">← Retour aux articles</a></nav>
+      <header>
+        <h1>{title}</h1>
+        <div class="meta">
+          {pubDate && <span>{new Date(pubDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
+          {author && <span>Par {author}</span>}
+        </div>
+        {tags && tags.length > 0 && (
+          <div class="tags">
+            {tags.map(tag => <span class="tag">{tag}</span>)}
+          </div>
+        )}
+      </header>
       <article>
         <slot />
       </article>
-    </main>
+      <footer>
+        <p>© {new Date().getFullYear()} Sakaybrile · Tous droits réservés</p>
+      </footer>
+    </div>
   </body>
 </html>
