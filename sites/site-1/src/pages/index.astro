@@ -1,32 +1,37 @@
 ---
 import { supabase } from '../lib/supabase'
 
-const { data: articles, error } = await supabase
-  .from('articles')
-  .select('id, title, slug, meta_description, keyword, word_count, created_at')
-  .eq('status', 'published')
-  .order('created_at', { ascending: false })
-  .limit(10)
+let articles: any[] = []
+let fetchError: string | null = null
+
+if (supabase) {
+  const { data, error } = await supabase
+    .from('articles')
+    .select('id, title, slug, meta_description, keyword, word_count, created_at')
+    .eq('status', 'published')
+    .order('created_at', { ascending: false })
+    .limit(10)
+  if (error) fetchError = error.message
+  else articles = data || []
+}
 ---
 
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
     <meta name="google-site-verification" content="MIK0Jo6dxefDyCpfWb9b5TKPRMXAQjsEcftwu0uVV_I" />
     <title>Site SEO</title>
   </head>
   <body>
     <h1>Articles SEO</h1>
-    {error && <p>Erreur Supabase: {error.message}</p>}
-    {!error && articles?.length === 0 && <p>Aucun article publié pour l'instant.</p>}
+    {fetchError && <p>Erreur: {fetchError}</p>}
+    {articles.length === 0 && <p>Aucun article publié pour l'instant.</p>}
     <ul>
-      {articles?.map(article => (
+      {articles.map(article => (
         <li>
-          <a href={`/articles/${article.slug}`}>{article.title}</a>
+          <a href={`/blog/${article.slug}/`}>{article.title}</a>
           <p>{article.meta_description}</p>
           <small>{article.word_count} mots · {new Date(article.created_at).toLocaleDateString('fr-FR')}</small>
         </li>
