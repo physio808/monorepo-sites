@@ -1,0 +1,26 @@
+---
+const { frontmatter } = Astro.props;
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={frontmatter.description} />
+    <meta name="google-site-verification" content="MIK0Jo6dxefDyCpfWb9b5TKPRMXAQjsEcftwu0uVV_I" />
+    <title>{frontmatter.title}</title>
+  </head>
+  <body>
+    <header>
+      <a href="/">← Accueil</a>
+    </header>
+    <main>
+      <h1>{frontmatter.title}</h1>
+      <time>{frontmatter.pubDate}</time>
+      <article>
+        <slot />
+      </article>
+    </main>
+  </body>
+</html>
