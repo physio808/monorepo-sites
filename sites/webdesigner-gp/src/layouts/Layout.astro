@@ -1,0 +1,130 @@
+---
+import SEO from '../components/SEO.astro'
+import { ViewTransitions } from 'astro:transitions'
+
+interface Props {
+  title: string
+  description: string
+  canonical?: string
+  image?: string
+  type?: 'website' | 'article'
+  publishDate?: Date
+  jsonLd?: Record<string, unknown>[]
+}
+
+const props = Astro.props
+const pathname = Astro.url.pathname
+---
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <SEO {...props} />
+  <ViewTransitions />
+  <style is:global>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-primary: #0e7490;
+      --color-primary-dark: #0c4a6e;
+      --color-accent: #f97316;
+      --color-text: #1e293b;
+      --color-text-light: #64748b;
+      --color-bg: #ffffff;
+      --color-bg-alt: #f8fafc;
+      --color-border: #e2e8f0;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius: 0.75rem;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --max-w: 1200px;
+    }
+    html { font-family: var(--font-sans); color: var(--color-text); background: var(--color-bg); scroll-behavior: smooth; }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    main { flex: 1; }
+    img { max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.25rem; }
+    .section { padding: 5rem 0; }
+    .section-alt { background: var(--color-bg-alt); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 1.75rem; border-radius: var(--radius);
+      font-weight: 600; font-size: 1rem; cursor: pointer;
+      transition: all 0.2s ease; border: 2px solid transparent;
+    }
+    .btn-primary { background: var(--color-primary); color: white; }
+    .btn-primary:hover { background: var(--color-primary-dark); transform: translateY(-1px); box-shadow: var(--shadow); }
+    .btn-outline { border-color: var(--color-primary); color: var(--color-primary); background: transparent; }
+    .btn-outline:hover { background: var(--color-primary); color: white; }
+    .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: #e0f2fe; color: var(--color-primary); }
+    h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; }
+    h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+    h3 { font-size: 1.25rem; }
+    p { line-height: 1.7; color: var(--color-text-light); }
+    @media (max-width: 768px) { .section { padding: 3rem 0; } }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--color-border);">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:4rem;">
+      <a href="/" style="font-weight:800;font-size:1.25rem;color:var(--color-primary);">
+        Sakaybrile<span style="color:var(--color-accent);">.</span>
+      </a>
+      <nav>
+        <ul style="display:flex;gap:2rem;list-style:none;align-items:center;">
+          <li><a href="/services/" style={`font-weight:500;color:${pathname.startsWith('/services') ? 'var(--color-primary)' : 'var(--color-text)'}`}>Services</a></li>
+          <li><a href="/portfolio/" style={`font-weight:500;color:${pathname.startsWith('/portfolio') ? 'var(--color-primary)' : 'var(--color-text)'}`}>Portfolio</a></li>
+          <li><a href="/blog/" style={`font-weight:500;color:${pathname.startsWith('/blog') ? 'var(--color-primary)' : 'var(--color-text)'}`}>Blog</a></li>
+          <li><a href="/contact/" class="btn btn-primary" style="padding:0.5rem 1.25rem;font-size:0.9rem;">Devis gratuit</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--color-text);color:#94a3b8;padding:3rem 0 1.5rem;" itemscope itemtype="https://schema.org/LocalBusiness">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2.5rem;margin-bottom:2.5rem;">
+        <div>
+          <p style="color:white;font-weight:800;font-size:1.1rem;margin-bottom:0.75rem;" itemprop="name">Sakaybrile Web Design</p>
+          <p style="font-size:0.9rem;line-height:1.6;" itemprop="description">Web designer indépendant en Guadeloupe. Création de sites internet professionnels, référencement SEO et sites e-commerce.</p>
+          <p style="margin-top:1rem;font-size:0.85rem;" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+            <span itemprop="addressLocality">Guadeloupe</span>, <span itemprop="addressCountry">France</span>
+          </p>
+        </div>
+        <div>
+          <p style="color:white;font-weight:600;margin-bottom:0.75rem;">Services</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.9rem;">
+            <li><a href="/services/creation-site-vitrine/" style="color:inherit;hover:color:white;">Création site vitrine</a></li>
+            <li><a href="/services/creation-site-ecommerce/" style="color:inherit;">Création site e-commerce</a></li>
+            <li><a href="/services/referencement-seo/" style="color:inherit;">Référencement SEO</a></li>
+          </ul>
+        </div>
+        <div>
+          <p style="color:white;font-weight:600;margin-bottom:0.75rem;">Contact</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.9rem;">
+            <li><a href="mailto:contact@sakaybrile.uk" style="color:inherit;" itemprop="email">contact@sakaybrile.uk</a></li>
+            <li><a href="/contact/" style="color:inherit;">Demander un devis</a></li>
+            <li><a href="/faq/" style="color:inherit;">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="border-top:1px solid #334155;padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:0.8rem;">
+        <p>© {new Date().getFullYear()} Sakaybrile Web Design — Web designer Guadeloupe</p>
+        <nav style="display:flex;gap:1.5rem;">
+          <a href="/mentions-legales/" style="color:inherit;">Mentions légales</a>
+          <a href="/sitemap-index.xml" style="color:inherit;">Sitemap</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

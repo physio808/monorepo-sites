@@ -1,0 +1,257 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const projects = await getCollection('portfolio', ({ data }) => !data.draft);
+const sortedProjects = projects.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+
+const types = ['Tous', 'Site vitrine', 'E-commerce', 'Blog', 'SaaS'];
+
+const jsonLdPortfolio = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Portfolio — Réalisations sites internet Guadeloupe | Sakaybrile",
+  "description": "Découvrez mes réalisations : sites vitrines, e-commerce, blogs pour des entrepreneurs et PME en Guadeloupe. Plus de 50 sites créés depuis 2019.",
+  "url": "https://webdesigner.sakaybrile.uk/portfolio",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://webdesigner.sakaybrile.uk" },
+      { "@type": "ListItem", "position": 2, "name": "Portfolio", "item": "https://webdesigner.sakaybrile.uk/portfolio" }
+    ]
+  }
+};
+---
+
+<Layout
+  title="Portfolio — Sites Internet créés en Guadeloupe | Sakaybrile Webdesigner"
+  description="Plus de 50 sites internet créés pour des entrepreneurs en Guadeloupe. Sites vitrines, e-commerce, blogs optimisés SEO. Découvrez mes réalisations."
+  canonical="https://webdesigner.sakaybrile.uk/portfolio"
+  jsonLd={[jsonLdPortfolio]}
+>
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <div class="container">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li aria-hidden="true">›</li>
+        <li aria-current="page">Portfolio</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="portfolio-hero">
+    <div class="container">
+      <h1>Mes réalisations</h1>
+      <p>Plus de 50 sites créés pour des entrepreneurs et PME en Guadeloupe et Antilles depuis 2019.</p>
+    </div>
+  </section>
+
+  <!-- Filtres -->
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" role="toolbar" aria-label="Filtrer par type de projet">
+        {types.map(type => (
+          <button
+            class={`filter-btn ${type === 'Tous' ? 'filter-btn--active' : ''}`}
+            data-filter={type === 'Tous' ? 'all' : type}
+          >
+            {type}
+          </button>
+        ))}
+      </div>
+
+      {sortedProjects.length > 0 ? (
+        <div class="portfolio-grid" id="portfolio-grid">
+          {sortedProjects.map(project => (
+            <article class="project-card" data-type={project.data.type}>
+              {project.data.featured && (
+                <div class="project-card__featured">⭐ Featured</div>
+              )}
+              <div class="project-card__image">
+                {project.data.image ? (
+                  <img
+                    src={project.data.image}
+                    alt={project.data.imageAlt || project.data.title}
+                    loading="lazy"
+                    width="600"
+                    height="400"
+                  />
+                ) : (
+                  <div class="project-card__placeholder" aria-hidden="true">
+                    <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="60" height="40" fill="#e0f2fe" rx="4"/>
+                      <rect x="5" y="5" width="50" height="30" fill="#bae6fd" rx="2"/>
+                      <rect x="10" y="10" width="20" height="3" fill="#0e7490" rx="1"/>
+                      <rect x="10" y="16" width="35" height="2" fill="#7dd3fc" rx="1"/>
+                      <rect x="10" y="21" width="28" height="2" fill="#7dd3fc" rx="1"/>
+                    </svg>
+                  </div>
+                )}
+                <div class="project-card__overlay">
+                  <a href={`/portfolio/${project.slug}`} class="btn btn--white btn--sm">
+                    Voir le projet
+                  </a>
+                  {project.data.url && (
+                    <a href={project.data.url} target="_blank" rel="noopener noreferrer" class="btn btn--outline-white btn--sm">
+                      Visiter ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div class="project-card__body">
+                <div class="project-card__meta">
+                  <span class="project-card__type">{project.data.type}</span>
+                  <time datetime={new Date(project.data.date).toISOString().split('T')[0]}>
+                    {new Date(project.data.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short' })}
+                  </time>
+                </div>
+                <h2 class="project-card__title">
+                  <a href={`/portfolio/${project.slug}`}>{project.data.title}</a>
+                </h2>
+                <p class="project-card__description">{project.data.description}</p>
+                {project.data.client && (
+                  <p class="project-card__client">Client : {project.data.client}</p>
+                )}
+                {project.data.tags && project.data.tags.length > 0 && (
+                  <div class="project-card__tags">
+                    {project.data.tags.map(tag => <span class="tag">{tag}</span>)}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <!-- Projets placeholder si collection vide -->
+        <div class="portfolio-grid">
+          {[
+            { title: "Restaurant Le Lagon", type: "Site vitrine", desc: "Site vitrine avec menu en ligne et réservation pour un restaurant à Gosier.", tags: ["Astro", "SEO local", "Restaurant"] },
+            { title: "Boutique Mode Antillaise", type: "E-commerce", desc: "Boutique en ligne de vêtements créoles avec paiement Stripe et livraison DOM-TOM.", tags: ["WooCommerce", "Stripe", "Mode"] },
+            { title: "Cabinet Juridique Pointe-à-Pitre", type: "Site vitrine", desc: "Site institutionnel pour un cabinet d'avocats, optimisé pour les recherches locales.", tags: ["Next.js", "SEO", "Juridique"] },
+            { title: "École de Plongée Guadeloupe", type: "Site vitrine", desc: "Site avec réservation de plongées, galerie photos et blog de conseils.", tags: ["Astro", "MDX", "Tourisme"] },
+            { title: "Épicerie Fine Antillaise", type: "E-commerce", desc: "E-commerce de produits locaux avec livraison en France métropolitaine.", tags: ["Shopify", "E-commerce", "Alimentaire"] },
+            { title: "Architecte Martinique", type: "Portfolio", desc: "Portfolio élégant pour un architecte avec galerie de projets immobiliers.", tags: ["Astro", "Portfolio", "Architecture"] },
+          ].map(p => (
+            <article class="project-card project-card--demo">
+              <div class="project-card__image">
+                <div class="project-card__placeholder" aria-hidden="true">
+                  <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="60" height="40" fill="#e0f2fe" rx="4"/>
+                    <rect x="5" y="5" width="50" height="30" fill="#bae6fd" rx="2"/>
+                    <rect x="10" y="10" width="20" height="3" fill="#0e7490" rx="1"/>
+                    <rect x="10" y="16" width="35" height="2" fill="#7dd3fc" rx="1"/>
+                    <rect x="10" y="21" width="28" height="2" fill="#7dd3fc" rx="1"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="project-card__body">
+                <div class="project-card__meta">
+                  <span class="project-card__type">{p.type}</span>
+                </div>
+                <h2 class="project-card__title">{p.title}</h2>
+                <p class="project-card__description">{p.desc}</p>
+                <div class="project-card__tags">
+                  {p.tags.map(tag => <span class="tag">{tag}</span>)}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Votre projet sera le prochain ?</h2>
+        <p>Demandez un devis gratuit et obtenez une réponse sous 24h.</p>
+        <a href="/contact" class="btn btn--white">Démarrer mon projet</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const grid = document.getElementById('portfolio-grid');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('filter-btn--active'));
+      btn.classList.add('filter-btn--active');
+
+      const filter = btn.dataset.filter;
+      if (!grid) return;
+
+      const cards = grid.querySelectorAll<HTMLElement>('.project-card');
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.type === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .breadcrumb { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 0.75rem 0; font-size: 0.875rem; }
+  .breadcrumb ol { list-style: none; display: flex; gap: 0.5rem; align-items: center; }
+  .breadcrumb a { color: var(--color-primary); text-decoration: none; }
+
+  .portfolio-hero { padding: 4rem 0; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); text-align: center; }
+  .portfolio-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem; }
+  .portfolio-hero p { font-size: 1.1rem; color: #475569; }
+
+  .filter-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .filter-btn { padding: 0.5rem 1.25rem; border-radius: 99px; border: 2px solid #e2e8f0; background: white; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; color: #475569; }
+  .filter-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+  .filter-btn--active { border-color: var(--color-primary); background: var(--color-primary); color: white; }
+
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+  .project-card { border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; position: relative; background: white; }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+  .project-card__featured { position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2; background: var(--color-accent); color: white; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px; }
+
+  .project-card__image { position: relative; overflow: hidden; aspect-ratio: 3/2; }
+  .project-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .project-card:hover .project-card__image img { transform: scale(1.05); }
+  .project-card__placeholder { width: 100%; height: 100%; background: #f0f9ff; display: flex; align-items: center; justify-content: center; }
+  .project-card__placeholder svg { width: 60%; height: 60%; }
+  .project-card__overlay { position: absolute; inset: 0; background: rgba(14,116,144,0.85); display: flex; align-items: center; justify-content: center; gap: 1rem; opacity: 0; transition: opacity 0.3s; }
+  .project-card:hover .project-card__overlay { opacity: 1; }
+
+  .project-card__body { padding: 1.5rem; }
+  .project-card__meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .project-card__type { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary); background: #e0f2fe; padding: 0.2rem 0.6rem; border-radius: 99px; }
+  .project-card__meta time { font-size: 0.8rem; color: #94a3b8; }
+  .project-card__title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .project-card__title a { color: #1e293b; text-decoration: none; }
+  .project-card__title a:hover { color: var(--color-primary); }
+  .project-card__description { color: #64748b; font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.75rem; }
+  .project-card__client { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.75rem; }
+  .project-card__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { background: #f1f5f9; color: #475569; padding: 0.2rem 0.6rem; border-radius: 0.3rem; font-size: 0.75rem; }
+
+  .btn--white { background: white; color: var(--color-primary); padding: 0.625rem 1.25rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; font-size: 0.875rem; }
+  .btn--outline-white { border: 2px solid white; color: white; padding: 0.625rem 1.25rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; font-size: 0.875rem; }
+  .btn--sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
+
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, #0369a1 100%); }
+  .cta-box { text-align: center; color: white; padding: 3rem; }
+  .cta-box h2 { color: white; font-size: 2rem; margin-bottom: 1rem; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 2rem; }
+
+  @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .portfolio-grid { grid-template-columns: 1fr; } }
+</style>

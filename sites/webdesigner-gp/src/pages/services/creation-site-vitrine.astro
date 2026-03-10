@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Création site vitrine Guadeloupe',
+  provider: { '@type': 'LocalBusiness', name: 'Sakaybrile Web Design', '@id': 'https://webdesigner.sakaybrile.uk/#business' },
+  areaServed: { '@type': 'Place', name: 'Guadeloupe' },
+  description: 'Création de sites vitrines professionnels en Guadeloupe. Design sur-mesure, SEO optimisé, responsive mobile.',
+  offers: { '@type': 'Offer', priceCurrency: 'EUR', price: '800', priceSpecification: { '@type': 'PriceSpecification', minPrice: 800, maxPrice: 3000 } },
+}, {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://webdesigner.sakaybrile.uk/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://webdesigner.sakaybrile.uk/services/' },
+    { '@type': 'ListItem', position: 3, name: 'Création site vitrine', item: 'https://webdesigner.sakaybrile.uk/services/creation-site-vitrine/' },
+  ],
+}]
+---
+<Layout
+  title="Création Site Vitrine Guadeloupe — À partir de 800€ | Sakaybrile"
+  description="Création de site vitrine professionnel en Guadeloupe à partir de 800€. Design sur-mesure, SEO local, responsive mobile. Devis gratuit sous 24h."
+  jsonLd={jsonLd}
+>
+  <nav style="background:var(--color-bg-alt);padding:0.75rem 0;font-size:0.875rem;border-bottom:1px solid var(--color-border);">
+    <div class="container">
+      <a href="/">Accueil</a> › <a href="/services/">Services</a> › Création site vitrine
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container" style="max-width:800px;margin:0 auto;">
+      <span class="badge">Service</span>
+      <h1 style="margin-top:1rem;">Création Site Vitrine en Guadeloupe</h1>
+      <p style="font-size:1.125rem;margin-top:1rem;margin-bottom:2.5rem;">
+        Un site vitrine professionnel pour présenter votre activité, vos services et attirer des clients en Guadeloupe. Livré en 3 à 5 semaines, optimisé pour Google.
+      </p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:3rem;">
+        {[
+          ['Design sur-mesure', 'Votre identité visuelle, pas un template générique'],
+          ['SEO local inclus', 'Optimisé pour les recherches en Guadeloupe'],
+          ['Mobile-first', 'Parfait sur smartphone, tablette et desktop'],
+          ['Rapide à charger', 'Score PageSpeed > 90 garanti'],
+          ['CMS intégré', 'Gérez vos contenus sans technique'],
+          ['SSL + Hébergement', 'Sécurisé et fiable 24h/24'],
+        ].map(([t, d]) => (
+          <div style="padding:1.25rem;border:1px solid var(--color-border);border-radius:var(--radius);">
+            <p style="font-weight:600;color:var(--color-text);margin-bottom:0.25rem;">✓ {t}</p>
+            <p style="font-size:0.825rem;">{d}</p>
+          </div>
+        ))}
+      </div>
+
+      <div style="background:var(--color-primary);color:white;border-radius:var(--radius);padding:2rem;text-align:center;">
+        <p style="font-size:1.5rem;font-weight:800;color:white;margin-bottom:0.5rem;">À partir de 800€</p>
+        <p style="color:#bae6fd;margin-bottom:1.5rem;">Devis gratuit et personnalisé sous 24h</p>
+        <a href="/contact/" class="btn btn-primary" style="background:var(--color-accent);border-color:var(--color-accent);">Demander un devis →</a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,216 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) =>
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+
+const jsonLdBlog = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Blog — Création site internet & SEO Guadeloupe | Sakaybrile",
+  "description": "Conseils, tutoriels et actualités sur la création de sites internet, le SEO local et le webdesign en Guadeloupe. Ressources gratuites pour entrepreneurs.",
+  "url": "https://webdesigner.sakaybrile.uk/blog",
+  "publisher": {
+    "@type": "Person",
+    "name": "Sakaybrile",
+    "url": "https://webdesigner.sakaybrile.uk"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://webdesigner.sakaybrile.uk" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://webdesigner.sakaybrile.uk/blog" }
+    ]
+  }
+};
+---
+
+<Layout
+  title="Blog — Création site internet & SEO Guadeloupe | Sakaybrile Webdesigner"
+  description="Conseils pratiques sur le webdesign, le SEO local et la création de sites en Guadeloupe. Ressources gratuites pour développer votre présence en ligne."
+  canonical="https://webdesigner.sakaybrile.uk/blog"
+  jsonLd={[jsonLdBlog]}
+>
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <div class="container">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li aria-hidden="true">›</li>
+        <li aria-current="page">Blog</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="blog-hero">
+    <div class="container">
+      <h1>Blog & Ressources</h1>
+      <p>Conseils pratiques en webdesign, SEO et création de site internet pour les entrepreneurs en Guadeloupe.</p>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section class="section">
+    <div class="container">
+      {sortedPosts.length > 0 ? (
+        <div class="blog-grid">
+          {sortedPosts.map((post, index) => (
+            <article class={`post-card ${index === 0 ? 'post-card--featured' : ''}`}>
+              {post.data.image && (
+                <div class="post-card__image">
+                  <img
+                    src={post.data.image}
+                    alt={post.data.imageAlt || post.data.title}
+                    loading={index < 3 ? 'eager' : 'lazy'}
+                    width="800"
+                    height="450"
+                  />
+                </div>
+              )}
+              <div class="post-card__body">
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="post-card__tags">
+                    {post.data.tags.slice(0, 2).map(tag => <span class="tag">{tag}</span>)}
+                  </div>
+                )}
+                <h2 class="post-card__title">
+                  <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                </h2>
+                <p class="post-card__desc">{post.data.description}</p>
+                <div class="post-card__footer">
+                  <time datetime={new Date(post.data.pubDate).toISOString().split('T')[0]}>
+                    {new Date(post.data.pubDate).toLocaleDateString('fr-FR', {
+                      year: 'numeric', month: 'long', day: 'numeric'
+                    })}
+                  </time>
+                  <a href={`/blog/${post.slug}`} class="post-card__read-more">
+                    Lire l'article →
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <!-- Articles placeholder -->
+        <div class="blog-grid">
+          {[
+            { title: "Combien coûte un site internet en Guadeloupe en 2026 ?", desc: "Tarifs réels, options et conseils pour budgétiser votre projet web en Guadeloupe. Vitrine, e-commerce, blog : on vous dit tout.", tags: ["Tarifs", "Conseils"], date: "2026-02-15" },
+            { title: "SEO local Guadeloupe : comment apparaître en 1ère page Google", desc: "Stratégie complète pour améliorer votre référencement local en Guadeloupe. Google My Business, mots-clés, backlinks locaux.", tags: ["SEO", "Local"], date: "2026-02-01" },
+            { title: "Pourquoi votre site internet est trop lent (et comment y remédier)", desc: "Les 5 principales causes de lenteur et les solutions techniques concrètes pour accélérer votre site web.", tags: ["Performance", "Technique"], date: "2026-01-20" },
+            { title: "Astro vs WordPress : que choisir pour votre site en 2026 ?", desc: "Comparaison honnête entre WordPress et Astro pour la création de sites en Guadeloupe. Performances, SEO, facilité d'utilisation.", tags: ["Astro", "WordPress"], date: "2026-01-10" },
+            { title: "Core Web Vitals : le guide complet pour les non-techniciens", desc: "LCP, FID, CLS expliqués simplement. Pourquoi ces métriques impactent votre position sur Google et comment les améliorer.", tags: ["SEO", "Performance"], date: "2025-12-15" },
+            { title: "Créer une boutique en ligne en Guadeloupe : guide complet 2026", desc: "Toutes les étapes pour lancer votre e-commerce : plateforme, paiement local, livraison DOM-TOM, obligations légales.", tags: ["E-commerce", "Guide"], date: "2025-12-01" },
+          ].map((p, i) => (
+            <article class={`post-card ${i === 0 ? 'post-card--featured' : ''}`}>
+              <div class="post-card__image post-card__image--placeholder" aria-hidden="true">
+                <div class="placeholder-img"></div>
+              </div>
+              <div class="post-card__body">
+                <div class="post-card__tags">
+                  {p.tags.map(t => <span class="tag">{t}</span>)}
+                </div>
+                <h2 class="post-card__title">{p.title}</h2>
+                <p class="post-card__desc">{p.desc}</p>
+                <div class="post-card__footer">
+                  <time datetime={p.date}>
+                    {new Date(p.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </time>
+                  <a href="/contact" class="post-card__read-more">Lire l'article →</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="section newsletter-section">
+    <div class="container">
+      <div class="newsletter-box">
+        <div>
+          <h2>Conseils SEO & webdesign gratuits</h2>
+          <p>Recevez 1 tip actionnable par semaine pour améliorer votre présence en ligne.</p>
+        </div>
+        <form class="newsletter-form" action="/api/newsletter" method="POST">
+          <input type="email" name="email" placeholder="votre@email.com" required aria-label="Votre adresse email" />
+          <button type="submit">S'inscrire</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Prêt à créer votre site internet ?</h2>
+        <p>Devis gratuit en 48h — Je m'occupe de tout.</p>
+        <a href="/contact" class="btn btn--white">Demander un devis</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .breadcrumb { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 0.75rem 0; font-size: 0.875rem; }
+  .breadcrumb ol { list-style: none; display: flex; gap: 0.5rem; align-items: center; }
+  .breadcrumb a { color: var(--color-primary); text-decoration: none; }
+
+  .blog-hero { padding: 4rem 0; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); text-align: center; }
+  .blog-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem; }
+  .blog-hero p { font-size: 1.1rem; color: #475569; max-width: 600px; margin: 0 auto; }
+
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .post-card--featured { grid-column: span 2; }
+
+  .post-card { background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+  .post-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+
+  .post-card__image { overflow: hidden; aspect-ratio: 16/9; }
+  .post-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .post-card:hover .post-card__image img { transform: scale(1.05); }
+  .post-card__image--placeholder { background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); }
+  .placeholder-img { width: 100%; height: 100%; min-height: 200px; }
+
+  .post-card__body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .post-card__tags { display: flex; gap: 0.4rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .tag { background: #e0f2fe; color: var(--color-primary); padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.75rem; font-weight: 500; }
+
+  .post-card__title { font-size: 1.1rem; line-height: 1.4; margin-bottom: 0.75rem; }
+  .post-card--featured .post-card__title { font-size: 1.35rem; }
+  .post-card__title a { color: #1e293b; text-decoration: none; }
+  .post-card__title a:hover { color: var(--color-primary); }
+
+  .post-card__desc { color: #64748b; font-size: 0.9rem; line-height: 1.6; flex: 1; margin-bottom: 1rem; }
+
+  .post-card__footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 1rem; border-top: 1px solid #f1f5f9; }
+  .post-card__footer time { font-size: 0.8rem; color: #94a3b8; }
+  .post-card__read-more { font-size: 0.875rem; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+  .post-card__read-more:hover { text-decoration: underline; }
+
+  .newsletter-section { background: #f0f9ff; }
+  .newsletter-box { background: white; border-radius: 1rem; padding: 3rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+  .newsletter-box h2 { margin-bottom: 0.5rem; }
+  .newsletter-box p { color: #64748b; }
+  .newsletter-form { display: flex; gap: 0.75rem; min-width: 360px; flex-shrink: 0; }
+  .newsletter-form input { flex: 1; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; }
+  .newsletter-form input:focus { outline: none; border-color: var(--color-primary); }
+  .newsletter-form button { background: var(--color-primary); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .newsletter-form button:hover { background: #0369a1; }
+
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, #0369a1 100%); }
+  .cta-box { text-align: center; color: white; padding: 3rem; }
+  .cta-box h2 { color: white; font-size: 2rem; margin-bottom: 1rem; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 2rem; }
+  .btn--white { background: white; color: var(--color-primary); padding: 0.875rem 2.5rem; border-radius: 0.5rem; font-weight: 700; text-decoration: none; }
+
+  @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } .post-card--featured { grid-column: span 2; } }
+  @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } .post-card--featured { grid-column: 1; } .newsletter-box { flex-direction: column; } .newsletter-form { min-width: auto; width: 100%; flex-direction: column; } }
+</style>

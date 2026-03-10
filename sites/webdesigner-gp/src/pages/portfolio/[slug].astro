@@ -1,0 +1,159 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('portfolio');
+  return projects.map(project => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+const dateFormatted = new Date(project.data.date).toLocaleDateString('fr-FR', {
+  year: 'numeric', month: 'long'
+});
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": project.data.title,
+  "description": project.data.description,
+  "dateCreated": new Date(project.data.date).toISOString().split('T')[0],
+  "creator": {
+    "@type": "Person",
+    "name": "Sakaybrile",
+    "url": "https://webdesigner.sakaybrile.uk"
+  },
+  "url": project.data.url || `https://webdesigner.sakaybrile.uk/portfolio/${project.slug}`,
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://webdesigner.sakaybrile.uk" },
+      { "@type": "ListItem", "position": 2, "name": "Portfolio", "item": "https://webdesigner.sakaybrile.uk/portfolio" },
+      { "@type": "ListItem", "position": 3, "name": project.data.title, "item": `https://webdesigner.sakaybrile.uk/portfolio/${project.slug}` }
+    ]
+  }
+};
+---
+
+<Layout
+  title={`${project.data.title} — Portfolio | Sakaybrile Webdesigner Guadeloupe`}
+  description={project.data.description}
+  canonical={`https://webdesigner.sakaybrile.uk/portfolio/${project.slug}`}
+  image={project.data.image}
+  jsonLd={[jsonLd]}
+>
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <div class="container">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="/portfolio">Portfolio</a></li>
+        <li aria-hidden="true">›</li>
+        <li aria-current="page">{project.data.title}</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="project-hero">
+    <div class="container">
+      <div class="project-hero__grid">
+        <div class="project-hero__content">
+          <div class="project-hero__meta">
+            <span class="project-type">{project.data.type}</span>
+            <time>{dateFormatted}</time>
+          </div>
+          <h1>{project.data.title}</h1>
+          <p class="project-hero__desc">{project.data.description}</p>
+          {project.data.client && (
+            <p class="project-hero__client"><strong>Client :</strong> {project.data.client}</p>
+          )}
+          {project.data.tags && (
+            <div class="project-hero__tags">
+              {project.data.tags.map(tag => <span class="tag">{tag}</span>)}
+            </div>
+          )}
+          {project.data.url && (
+            <a href={project.data.url} target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+              Visiter le site ↗
+            </a>
+          )}
+        </div>
+        {project.data.image && (
+          <div class="project-hero__image">
+            <img
+              src={project.data.image}
+              alt={project.data.imageAlt || project.data.title}
+              width="800"
+              height="500"
+              loading="eager"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section">
+    <div class="container">
+      <div class="project-content">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <!-- Nav projects -->
+  <section class="section bg-light">
+    <div class="container project-nav-cta">
+      <div>
+        <h2>Votre projet, c'est le prochain ?</h2>
+        <p>Discutons de vos besoins et construisons quelque chose d'exceptionnel ensemble.</p>
+      </div>
+      <div class="project-nav-cta__btns">
+        <a href="/portfolio" class="btn btn--outline">← Voir tous les projets</a>
+        <a href="/contact" class="btn btn--primary">Démarrer un projet →</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .breadcrumb { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 0.75rem 0; font-size: 0.875rem; }
+  .breadcrumb ol { list-style: none; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--color-primary); text-decoration: none; }
+
+  .project-hero { padding: 4rem 0; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
+  .project-hero__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .project-hero__meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+  .project-type { background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 99px; text-transform: uppercase; }
+  .project-hero__meta time { color: #64748b; font-size: 0.875rem; }
+  .project-hero h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+  .project-hero__desc { font-size: 1.1rem; color: #475569; line-height: 1.7; margin-bottom: 1rem; }
+  .project-hero__client { color: #64748b; margin-bottom: 1rem; }
+  .project-hero__tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .tag { background: #e0f2fe; color: var(--color-primary); padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; font-weight: 500; }
+  .project-hero__image img { width: 100%; border-radius: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+
+  .project-content { max-width: 800px; margin: 0 auto; font-size: 1.05rem; line-height: 1.85; color: #334155; }
+  .project-content :global(h2) { font-size: 1.6rem; margin: 2rem 0 1rem; }
+  .project-content :global(h3) { font-size: 1.25rem; margin: 1.5rem 0 0.75rem; }
+  .project-content :global(p) { margin-bottom: 1.25rem; }
+  .project-content :global(ul), .project-content :global(ol) { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+  .project-content :global(li) { margin-bottom: 0.5rem; }
+  .project-content :global(img) { width: 100%; border-radius: 0.75rem; margin: 1.5rem 0; }
+
+  .project-nav-cta { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+  .project-nav-cta h2 { margin-bottom: 0.5rem; }
+  .project-nav-cta p { color: #64748b; }
+  .project-nav-cta__btns { display: flex; gap: 1rem; flex-shrink: 0; flex-wrap: wrap; }
+
+  @media (max-width: 768px) {
+    .project-hero__grid { grid-template-columns: 1fr; }
+    .project-nav-cta { flex-direction: column; }
+    .project-nav-cta__btns { width: 100%; }
+  }
+</style>

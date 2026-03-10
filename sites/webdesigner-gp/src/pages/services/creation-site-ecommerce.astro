@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+const jsonLd = [{
+  '@context': 'https://schema.org', '@type': 'Service',
+  name: 'Création site e-commerce Guadeloupe',
+  provider: { '@type': 'LocalBusiness', name: 'Sakaybrile Web Design' },
+  areaServed: { '@type': 'Place', name: 'Guadeloupe' },
+  description: 'Création de boutiques en ligne en Guadeloupe. Paiement sécurisé, gestion stocks, livraison.',
+  offers: { '@type': 'Offer', priceCurrency: 'EUR', price: '2000' },
+}, {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://webdesigner.sakaybrile.uk/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://webdesigner.sakaybrile.uk/services/' },
+    { '@type': 'ListItem', position: 3, name: 'Site e-commerce', item: 'https://webdesigner.sakaybrile.uk/services/creation-site-ecommerce/' },
+  ],
+}]
+---
+<Layout
+  title="Création Site E-commerce Guadeloupe — Boutique en Ligne | Sakaybrile"
+  description="Créez votre boutique en ligne en Guadeloupe. Paiement sécurisé, gestion des stocks, livraison Caraïbes. À partir de 2000€. Devis gratuit."
+  jsonLd={jsonLd}
+>
+  <nav style="background:var(--color-bg-alt);padding:0.75rem 0;font-size:0.875rem;border-bottom:1px solid var(--color-border);">
+    <div class="container"><a href="/">Accueil</a> › <a href="/services/">Services</a> › Site e-commerce</div>
+  </nav>
+  <section class="section">
+    <div class="container" style="max-width:800px;margin:0 auto;">
+      <span class="badge">Service</span>
+      <h1 style="margin-top:1rem;">Création Site E-commerce en Guadeloupe</h1>
+      <p style="font-size:1.125rem;margin-top:1rem;margin-bottom:2rem;">
+        Vendez vos produits en ligne en Guadeloupe et dans toute la Caraïbe. Boutique complète avec paiement sécurisé, gestion des stocks et livraison.
+      </p>
+      <div style="background:var(--color-primary);color:white;border-radius:var(--radius);padding:2rem;text-align:center;margin-top:2rem;">
+        <p style="font-size:1.5rem;font-weight:800;color:white;margin-bottom:0.5rem;">À partir de 2 000€</p>
+        <p style="color:#bae6fd;margin-bottom:1.5rem;">Solution complète prête à vendre</p>
+        <a href="/contact/" class="btn btn-primary" style="background:var(--color-accent);border-color:var(--color-accent);">Demander un devis →</a>
+      </div>
+    </div>
+  </section>
+</Layout>

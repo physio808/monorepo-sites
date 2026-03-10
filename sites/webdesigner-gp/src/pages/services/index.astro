@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro'
+---
+<Layout title="Services Web Designer Guadeloupe | Sakaybrile" description="Création de sites internet, e-commerce et référencement SEO en Guadeloupe. Découvrez tous mes services web.">
+  <section class="section">
+    <div class="container" style="max-width:800px;margin:0 auto;">
+      <h1>Services Web en Guadeloupe</h1>
+      <p style="margin-top:1rem;margin-bottom:2rem;">Création de sites internet professionnels, boutiques e-commerce et référencement SEO pour les entreprises de Guadeloupe.</p>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        {[
+          ['/services/creation-site-vitrine/', '🖥️ Création site vitrine', 'À partir de 800€'],
+          ['/services/creation-site-ecommerce/', '🛒 Création site e-commerce', 'À partir de 2 000€'],
+          ['/services/referencement-seo/', '📈 Référencement SEO', 'À partir de 300€/mois'],
+        ].map(([href, label, price]) => (
+          <a href={href} style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border:1px solid var(--color-border);border-radius:var(--radius);font-weight:600;color:var(--color-text);">
+            <span>{label}</span><span style="color:var(--color-primary);font-size:0.9rem;">{price} →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

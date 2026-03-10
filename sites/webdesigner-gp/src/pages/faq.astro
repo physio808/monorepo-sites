@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+  {
+    question: "Combien coûte la création d'un site internet en Guadeloupe ?",
+    answer: "Le tarif varie selon la complexité du projet. Un site vitrine professionnel débute à 800€, un site e-commerce à 2000€. Chaque projet est différent — je vous envoie un devis gratuit et personnalisé sous 48h après notre échange. Des facilités de paiement en 3 fois sont disponibles.",
+    category: "Tarifs"
+  },
+  {
+    question: "Quel est le délai pour créer un site internet ?",
+    answer: "Un site vitrine est livré en 2 à 3 semaines. Un site e-commerce prend généralement 4 à 8 semaines. Ces délais dépendent aussi de votre réactivité pour les retours et la fourniture de contenus (textes, photos). Je vous donne un planning précis lors du devis.",
+    category: "Délais"
+  },
+  {
+    question: "Vous travaillez uniquement en Guadeloupe ?",
+    answer: "Je suis basé à Pointe-à-Pitre et travaille principalement avec des clients en Guadeloupe, Martinique, Guyane et Saint-Martin. Mais je collabore aussi avec des clients en France métropolitaine. Tout le processus peut se faire à distance par appel vidéo, sans perdre en qualité.",
+    category: "Zone géographique"
+  },
+  {
+    question: "Mon site sera-t-il visible sur Google ?",
+    answer: "Oui, tous mes sites sont construits avec les meilleures pratiques SEO : structure HTML sémantique, données structurées Schema.org, performances optimisées (Core Web Vitals), méta-données, sitemap XML. Je propose aussi des forfaits SEO mensuel pour améliorer et maintenir votre positionnement local.",
+    category: "SEO"
+  },
+  {
+    question: "Est-ce que je peux modifier mon site moi-même ?",
+    answer: "Absolument. Je livre tous mes sites avec un CMS (système de gestion de contenu) intuitif qui vous permet d'ajouter des articles de blog, modifier des textes et des photos sans aucune connaissance technique. Une formation de 2 heures est incluse dans chaque projet.",
+    category: "Autonomie"
+  },
+  {
+    question: "Que se passe-t-il si mon site tombe en panne ?",
+    answer: "Je propose des contrats de maintenance mensuelle qui incluent la surveillance du site, les sauvegardes quotidiennes, les mises à jour de sécurité et un support prioritaire. En cas d'urgence, j'interviens sous 4h ouvrées. Vous n'êtes jamais seul.",
+    category: "Maintenance"
+  },
+  {
+    question: "Proposez-vous l'hébergement du site ?",
+    answer: "Oui, je gère l'hébergement si vous le souhaitez (inclus la première année dans certains forfaits). J'utilise des hébergeurs haute performance : Cloudflare Pages, Vercel, ou des VPS dédiés pour les projets e-commerce. Vous pouvez aussi héberger avec votre propre hébergeur — je m'adapte.",
+    category: "Hébergement"
+  },
+  {
+    question: "Pouvez-vous refaire mon site existant ?",
+    answer: "Oui, la refonte de site est même l'une de mes spécialités. J'audite d'abord l'existant (performances, SEO, UX) pour identifier les points d'amélioration, puis je crée un nouveau site plus performant tout en préservant votre référencement acquis grâce à des redirections 301 soigneusement planifiées.",
+    category: "Refonte"
+  },
+  {
+    question: "Fournissez-vous des rapports sur les performances du site ?",
+    answer: "Oui. J'installe Google Analytics 4 et Search Console sur tous mes sites. Dans les forfaits maintenance, je fournis un rapport mensuel : trafic, positions sur Google, conversions. Vous savez exactement si votre site travaille pour vous.",
+    category: "Reporting"
+  },
+  {
+    question: "Est-ce qu'un site internet peut vraiment m'apporter des clients en Guadeloupe ?",
+    answer: "Absolument. 88% des consommateurs recherchent un produit ou service sur internet avant d'acheter, même localement. Un site bien référencé sur 'plombier Pointe-à-Pitre' ou 'restaurant Gosier' génère régulièrement des appels et des visites en boutique. Mes clients témoignent d'une augmentation de 30 à 150% de leurs demandes de contact.",
+    category: "Efficacité"
+  },
+  {
+    question: "Créez-vous aussi des boutiques en ligne pour vendre mes produits ?",
+    answer: "Oui, je crée des boutiques e-commerce complètes avec paiement sécurisé (Stripe, PayPlug qui accepte les cartes Antillaises), gestion des stocks, livraison, bon de commande. Je peux intégrer des solutions click-and-collect adaptées aux commerces locaux guadeloupéens.",
+    category: "E-commerce"
+  },
+  {
+    question: "Comment se passe le paiement ?",
+    answer: "Je demande 50% à la signature du devis et 50% à la livraison. Je propose aussi le paiement en 3 fois sans frais pour les projets supérieurs à 1000€. J'accepte les virements bancaires et les chèques. Un devis signé vaut contrat — tout est transparent et sécurisé.",
+    category: "Paiement"
+  }
+];
+
+const categories = [...new Set(faqs.map(f => f.category))];
+
+const jsonLdFAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "name": "FAQ — Questions fréquentes création site internet Guadeloupe",
+  "description": "Toutes les réponses à vos questions sur la création de sites internet en Guadeloupe : tarifs, délais, SEO, hébergement, maintenance.",
+  "url": "https://webdesigner.sakaybrile.uk/faq",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  })),
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://webdesigner.sakaybrile.uk" },
+      { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://webdesigner.sakaybrile.uk/faq" }
+    ]
+  }
+};
+---
+
+<Layout
+  title="FAQ — Questions sur la création de site internet en Guadeloupe | Sakaybrile"
+  description="Tarifs, délais, SEO, hébergement, maintenance : toutes les réponses à vos questions sur la création de site internet en Guadeloupe. Devis gratuit en 48h."
+  canonical="https://webdesigner.sakaybrile.uk/faq"
+  jsonLd={[jsonLdFAQ]}
+>
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <div class="container">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li aria-hidden="true">›</li>
+        <li aria-current="page">FAQ</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="faq-hero">
+    <div class="container">
+      <h1>Questions fréquentes</h1>
+      <p class="faq-hero__subtitle">
+        Tout ce que vous voulez savoir sur la création de site internet en Guadeloupe.
+        Vous ne trouvez pas votre réponse ? <a href="/contact">Contactez-moi directement.</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ Content -->
+  <section class="section">
+    <div class="container">
+      <div class="faq-layout">
+        <!-- Navigation par catégorie -->
+        <aside class="faq-nav">
+          <h2 class="faq-nav__title">Catégories</h2>
+          <ul>
+            {categories.map(cat => (
+              <li><a href={`#cat-${cat.toLowerCase().replace(/\s+/g, '-')}`}>{cat}</a></li>
+            ))}
+          </ul>
+          <div class="faq-nav__cta">
+            <p>Autre question ?</p>
+            <a href="/contact" class="btn btn--primary btn--sm">Me contacter</a>
+          </div>
+        </aside>
+
+        <!-- Questions -->
+        <main class="faq-content">
+          {categories.map(category => (
+            <div class="faq-category" id={`cat-${category.toLowerCase().replace(/\s+/g, '-')}`}>
+              <h2 class="faq-category__title">{category}</h2>
+              <div class="faq-list">
+                {faqs.filter(f => f.category === category).map((faq, i) => (
+                  <details class="faq-item">
+                    <summary class="faq-item__question">
+                      <span>{faq.question}</span>
+                      <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </summary>
+                    <div class="faq-item__answer">
+                      <p>{faq.answer}</p>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          ))}
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Votre question n'est pas listée ?</h2>
+        <p>Je réponds personnellement à toutes les demandes sous 24h.</p>
+        <div class="cta-box__actions">
+          <a href="/contact" class="btn btn--white">Envoyer un message</a>
+          <a href="tel:+590XXXXXXXX" class="btn btn--outline-white">Appeler directement</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .breadcrumb { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 0.75rem 0; font-size: 0.875rem; }
+  .breadcrumb ol { list-style: none; display: flex; gap: 0.5rem; align-items: center; }
+  .breadcrumb a { color: var(--color-primary); text-decoration: none; }
+
+  .faq-hero { padding: 4rem 0; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); text-align: center; }
+  .faq-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem; }
+  .faq-hero__subtitle { font-size: 1.1rem; color: #475569; max-width: 600px; margin: 0 auto; }
+  .faq-hero__subtitle a { color: var(--color-primary); font-weight: 600; }
+
+  .faq-layout { display: grid; grid-template-columns: 240px 1fr; gap: 3rem; align-items: start; }
+
+  .faq-nav { position: sticky; top: 5rem; background: #f8fafc; border-radius: 1rem; padding: 1.5rem; }
+  .faq-nav__title { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-bottom: 1rem; }
+  .faq-nav ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 2rem; }
+  .faq-nav a { color: #475569; text-decoration: none; font-size: 0.9rem; padding: 0.4rem 0.75rem; border-radius: 0.4rem; display: block; transition: all 0.2s; }
+  .faq-nav a:hover { background: white; color: var(--color-primary); }
+  .faq-nav__cta { border-top: 1px solid #e2e8f0; padding-top: 1.5rem; text-align: center; }
+  .faq-nav__cta p { font-size: 0.9rem; color: #64748b; margin-bottom: 0.75rem; }
+
+  .faq-category { margin-bottom: 3rem; }
+  .faq-category__title { font-size: 1.25rem; color: var(--color-primary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e0f2fe; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .faq-item { border: 1px solid #e2e8f0; border-radius: 0.75rem; overflow: hidden; }
+  .faq-item[open] { border-color: var(--color-primary); }
+  .faq-item__question { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; cursor: pointer; font-weight: 600; color: #1e293b; list-style: none; gap: 1rem; transition: background 0.2s; }
+  .faq-item__question:hover { background: #f8fafc; }
+  .faq-item[open] .faq-item__question { background: #f0f9ff; color: var(--color-primary); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__icon { width: 1.25rem; height: 1.25rem; flex-shrink: 0; transition: transform 0.2s; color: #64748b; }
+  .faq-item[open] .faq-item__icon { transform: rotate(180deg); color: var(--color-primary); }
+  .faq-item__answer { padding: 0 1.5rem 1.25rem; }
+  .faq-item__answer p { color: #475569; line-height: 1.8; margin: 0; }
+
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, #0369a1 100%); }
+  .cta-box { text-align: center; color: white; padding: 3rem; }
+  .cta-box h2 { color: white; font-size: 2rem; margin-bottom: 1rem; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 2rem; }
+  .cta-box__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn--white { background: white; color: var(--color-primary); padding: 0.875rem 2rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; }
+  .btn--outline-white { border: 2px solid white; color: white; padding: 0.875rem 2rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; }
+  .btn--sm { padding: 0.5rem 1rem; font-size: 0.875rem; border-radius: 0.375rem; background: var(--color-primary); color: white; text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 768px) {
+    .faq-layout { grid-template-columns: 1fr; }
+    .faq-nav { position: static; }
+  }
+</style>

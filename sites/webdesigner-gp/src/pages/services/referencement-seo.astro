@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+const jsonLd = [{
+  '@context': 'https://schema.org', '@type': 'Service',
+  name: 'Référencement SEO Guadeloupe',
+  provider: { '@type': 'LocalBusiness', name: 'Sakaybrile Web Design' },
+  areaServed: { '@type': 'Place', name: 'Guadeloupe' },
+  description: 'Référencement SEO local en Guadeloupe. Audit, optimisation technique, contenus et suivi de positionnement Google.',
+  offers: { '@type': 'Offer', priceCurrency: 'EUR', price: '300' },
+}]
+---
+<Layout
+  title="Référencement SEO Guadeloupe — Première Page Google | Sakaybrile"
+  description="Référencement SEO local en Guadeloupe. Apparaissez en première page Google pour vos clients locaux. Audit gratuit + suivi mensuel à partir de 300€."
+  jsonLd={jsonLd}
+>
+  <section class="section">
+    <div class="container" style="max-width:800px;margin:0 auto;">
+      <span class="badge">Service</span>
+      <h1 style="margin-top:1rem;">Référencement SEO en Guadeloupe</h1>
+      <p style="font-size:1.125rem;margin-top:1rem;margin-bottom:2rem;">
+        Soyez visible sur Google quand vos clients cherchent vos services en Guadeloupe. Stratégie SEO locale adaptée au marché antillais.
+      </p>
+      <div style="background:var(--color-primary);color:white;border-radius:var(--radius);padding:2rem;text-align:center;margin-top:2rem;">
+        <p style="font-size:1.5rem;font-weight:800;color:white;margin-bottom:0.5rem;">À partir de 300€/mois</p>
+        <p style="color:#bae6fd;margin-bottom:1.5rem;">Audit SEO gratuit offert</p>
+        <a href="/contact/" class="btn btn-primary" style="background:var(--color-accent);border-color:var(--color-accent);">Demander l'audit gratuit →</a>
+      </div>
+    </div>
+  </section>
+</Layout>

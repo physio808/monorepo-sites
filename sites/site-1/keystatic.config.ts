@@ -49,6 +49,7 @@ export default config({
     navigation: {
       'sakaybrile.uk': ['sakaybrile_blog'],
       'Matieu White': ['matieuwhite_blog'],
+      'webdesigner.sakaybrile.uk': ['webdesigner_gp_blog'],
       // ── Nouveaux sites ajoutés via scripts/add-site.sh ──
     },
   },
@@ -74,6 +75,17 @@ export default config({
       entryLayout: 'content',
       format: { contentField: 'content' },
       schema: articleSchema('Matieu White'),
+    }),
+
+    // ── webdesigner.sakaybrile.uk (Astro)
+    // Géré par : sites/webdesigner-gp/  |  URL : webdesigner.sakaybrile.uk
+    webdesigner_gp_blog: collection({
+      label: '📝 Articles — webdesigner.sakaybrile.uk',
+      slugField: 'title',
+      path: 'sites/webdesigner-gp/src/content/blog/*',
+      entryLayout: 'content',
+      format: { contentField: 'content' },
+      schema: articleSchema('Sakaybrile Web Design'),
     }),
 
     // ── Nouveaux sites générés automatiquement par scripts/add-site.sh ──

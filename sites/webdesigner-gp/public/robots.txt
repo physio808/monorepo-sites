@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://webdesigner.sakaybrile.uk/sitemap-index.xml
+
+# Bloquer les URLs d'admin et temporaires
+Disallow: /keystatic/
+Disallow: /api/
+Disallow: /_astro/
