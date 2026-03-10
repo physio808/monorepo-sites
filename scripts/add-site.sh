@@ -200,15 +200,23 @@ with open(config_path, 'w') as f:
 print("✅ keystatic.config.ts mis à jour")
 PYEOF
 
-# ── 4. Résumé
+# ── 4. npm install
 echo ""
-echo "============================================"
-echo "✅ Site '$SLUG' ($DOMAIN) créé !"
-echo "============================================"
-echo "Prochaines étapes :"
-echo "  1. cd sites/$SLUG && npm install"
-echo "  2. git add -A && git commit -m 'feat: nouveau site $DOMAIN'"
-echo "  3. git push origin main"
-echo "  4. Cloudflare Pages → nouveau projet :"
-echo "     Root dir : sites/$SLUG | Build : npm run build | Output : dist"
-echo "  5. blog.sakaybrile.uk/keystatic → '$DOMAIN' apparaît dans la sidebar"
+echo "[4/6] Installation des dépendances npm..."
+cd "$SITE_DIR"
+/root/.nvm/versions/node/v22.22.1/bin/npm install --silent 2>&1 | tail -3
+cd "$REPO_ROOT"
+echo "✅ npm install OK"
+
+# ── 5. Git commit + push
+echo ""
+echo "[5/6] Git commit + push..."
+git -C "$REPO_ROOT" add -A
+git -C "$REPO_ROOT" commit -m "feat: nouveau site Astro $DOMAIN (sites/$SLUG)"
+git -C "$REPO_ROOT" push origin main
+echo "✅ Push OK"
+
+# ── 6. Déploiement Cloudflare Pages
+echo ""
+echo "[6/6] Déploiement Cloudflare Pages automatique..."
+bash "$REPO_ROOT/scripts/deploy-cloudflare.sh" "$SLUG" "$DOMAIN"
