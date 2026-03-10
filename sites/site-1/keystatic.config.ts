@@ -48,13 +48,14 @@ export default config({
     },
     navigation: {
       'sakaybrile.uk': ['sakaybrile_blog'],
-      'SaaS Template': ['saas_blog'],
       'Matieu White': ['matieuwhite_blog'],
+      // ── Nouveaux sites ajoutés via scripts/add-site.sh ──
     },
   },
 
   collections: {
     // ── Site 1 : sakaybrile.uk (blog Astro)
+    // Géré par : sites/site-1/  |  URL : blog.sakaybrile.uk
     sakaybrile_blog: collection({
       label: '📝 Articles — sakaybrile.uk',
       slugField: 'title',
@@ -64,17 +65,8 @@ export default config({
       schema: articleSchema('Équipe Sakaybrile'),
     }),
 
-    // ── Site 2 : SaaS template (Next.js)
-    saas_blog: collection({
-      label: '📝 Articles — SaaS Template',
-      slugField: 'title',
-      path: 'apps/saas-template/src/content/blog/*',
-      entryLayout: 'content',
-      format: { contentField: 'content' },
-      schema: articleSchema('Équipe SaaS'),
-    }),
-
-    // ── Site 3 : matieuwhite.com (stocké dans monorepo)
+    // ── Site 2 : matieuwhite.com (contenu stocké dans monorepo)
+    // Géré par : content/matieuwhite/blog/  |  URL : matieuwhite.com
     matieuwhite_blog: collection({
       label: '📝 Articles — matieuwhite.com',
       slugField: 'title',
@@ -83,5 +75,7 @@ export default config({
       format: { contentField: 'content' },
       schema: articleSchema('Matieu White'),
     }),
+
+    // ── Nouveaux sites générés automatiquement par scripts/add-site.sh ──
   },
 })
