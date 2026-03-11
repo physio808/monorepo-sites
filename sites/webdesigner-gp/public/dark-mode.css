@@ -1,0 +1,23 @@
+
+/* ── Mode sombre (généré par apply-effects.js) ── */
+[data-theme="dark"] {
+  --bg: #0a0a0f;
+  --bg-secondary: #111118;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --border: rgba(255,255,255,0.08);
+  --card-bg: #16161e;
+  --color-primary: #22d3ee;
+  --color-accent: #fb923c;
+}
+[data-theme="dark"] body { background: var(--bg); color: var(--text); }
+[data-theme="dark"] .bg-light { background: var(--bg-secondary) !important; }
+[data-theme="dark"] .post-card,
+[data-theme="dark"] .project-card,
+[data-theme="dark"] .service-card,
+[data-theme="dark"] .profile-card,
+[data-theme="dark"] .sidebar-cta,
+[data-theme="dark"] .sidebar-tags,
+[data-theme="dark"] .sidebar-share { background: var(--card-bg); border-color: var(--border); }
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3 { color: var(--text); }
+[data-theme="dark"] header { background: rgba(10,10,15,0.95); border-color: var(--border); }

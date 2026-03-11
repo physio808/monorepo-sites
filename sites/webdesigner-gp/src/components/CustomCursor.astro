@@ -1,0 +1,65 @@
+---
+// Custom cursor magnétique — présent sur 2/8 templates ThemeForest analysés
+---
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-outline" aria-hidden="true"></div>
+
+<style>
+  #cursor-dot,
+  #cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+  }
+  #cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent, #f97316);
+  }
+  #cursor-outline {
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(14, 116, 144, 0.5);
+    transition: width 0.2s, height 0.2s, border-color 0.2s;
+  }
+  body:has(a:hover) #cursor-outline,
+  body:has(button:hover) #cursor-outline {
+    width: 56px;
+    height: 56px;
+    border-color: var(--color-accent, #f97316);
+  }
+  @media (hover: none) {
+    #cursor-dot, #cursor-outline { display: none; }
+  }
+</style>
+
+<script>
+  const dot = document.getElementById('cursor-dot');
+  const outline = document.getElementById('cursor-outline');
+  let ox = 0, oy = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX, y = e.clientY;
+    if (dot) { dot.style.left = x + 'px'; dot.style.top = y + 'px'; }
+    // outline suit avec délai (lerp)
+    ox += (x - ox) * 0.12;
+    oy += (y - oy) * 0.12;
+    if (outline) { outline.style.left = ox + 'px'; outline.style.top = oy + 'px'; }
+  });
+
+  function lerp() {
+    if (outline) {
+      ox += (parseFloat(dot?.style.left || '0') - ox) * 0.12;
+      oy += (parseFloat(dot?.style.top || '0') - oy) * 0.12;
+      outline.style.left = ox + 'px';
+      outline.style.top = oy + 'px';
+    }
+    requestAnimationFrame(lerp);
+  }
+  lerp();
+</script>

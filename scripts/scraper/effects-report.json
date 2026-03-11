@@ -1,0 +1,444 @@
+{
+  "keyword": "web agency",
+  "sites_analyzed": 8,
+  "generated_at": "2026-03-10T12:26:38.698Z",
+  "summary": {
+    "top_js_libs": [
+      "isotope(6/8)",
+      "gsap(3/8)",
+      "scrolltrigger(2/8)",
+      "swiper(2/8)",
+      "splittext(2/8)"
+    ],
+    "top_features": [
+      "sticky_header(6/8)",
+      "preloader(5/8)",
+      "slider(5/8)",
+      "animated_counters(4/8)",
+      "dark_mode_toggle(4/8)",
+      "back_to_top(3/8)",
+      "custom_cursor(2/8)",
+      "typed_text(1/8)"
+    ],
+    "common_animations": [
+      "progress-bar-stripes",
+      "spinner-border",
+      "spinner-grow",
+      "placeholder-glow",
+      "placeholder-wave",
+      "fa-spin",
+      "swiper-preloader-spin",
+      "bounce",
+      "flash",
+      "pulse",
+      "shake",
+      "swing",
+      "tada",
+      "wobble",
+      "bounceIn"
+    ],
+    "top_fonts": [
+      "Font Awesome 5 Brands",
+      "Font Awesome 5 Pro",
+      "Font Awesome 6 Brands",
+      "Font Awesome 6 Duotone",
+      "Font Awesome 6 Pro"
+    ]
+  },
+  "sites": [
+    {
+      "title": "Dixor - Creative Digital Agency (ValidThemes)",
+      "url": "https://validthemes.net/site-template/dixor/",
+      "js_libs": [
+        "gsap",
+        "scrolltrigger",
+        "swiper",
+        "splittext",
+        "isotope"
+      ],
+      "css_effects": [
+        "reveal",
+        "counter",
+        "smooth_scroll"
+      ],
+      "animations": [
+        "progress-bar-stripes",
+        "spinner-border",
+        "spinner-grow",
+        "placeholder-glow",
+        "placeholder-wave",
+        "fa-spin",
+        "swiper-preloader-spin",
+        "bounce",
+        "flash",
+        "pulse",
+        "shake",
+        "swing",
+        "tada",
+        "wobble",
+        "bounceIn",
+        "bounceInDown",
+        "bounceInLeft",
+        "bounceInRight",
+        "bounceInUp",
+        "bounceOut"
+      ],
+      "colors": [
+        "--dark: #0e0f11",
+        "--dark-secondary: #18191b",
+        "--dark-optional: #2a2d32",
+        "--color-primary: #C9F31D",
+        "--color-secondary: #add40c",
+        "--color-heading: #04000b",
+        "--color-paragraph: #666666",
+        "--bg-gray: #f2f3ef",
+        "--bg-gray-secondary: #eff2e4",
+        "--bg-gradient: linear-gradient(45deg, var(--color-secondary) 0%, var(--color-primary) 50%)",
+        "--bg-gradient-secondary: linear-gradient(90deg, rgba(237,245,255,1) 0%, rgba(204,223,247,1) 100%)"
+      ],
+      "fonts": [
+        "Font Awesome 5 Brands",
+        "Font Awesome 5 Duotone",
+        "Font Awesome 5 Pro",
+        "flaticon",
+        "swiper-icons"
+      ],
+      "layout_features": [
+        "preloader",
+        "animated_counters",
+        "slider",
+        "sticky_header"
+      ],
+      "accessible": true,
+      "error": null
+    },
+    {
+      "title": "Abstrak - Creative Agency (AxilThemes)",
+      "url": "https://new.axilthemes.com/demo/template/abstrak/",
+      "js_libs": [
+        "isotope"
+      ],
+      "css_effects": [
+        "counter",
+        "sticky"
+      ],
+      "animations": [
+        "progress-bar-stripes",
+        "spinner-border",
+        "spinner-grow",
+        "placeholder-glow",
+        "placeholder-wave",
+        "fa-beat",
+        "fa-bounce",
+        "fa-fade",
+        "fa-beat-fade",
+        "fa-flip",
+        "fa-shake",
+        "fa-spin",
+        "spin",
+        "movingleftright1",
+        "movingleftright2",
+        "movingleftright3",
+        "shine",
+        "headerSlideDown"
+      ],
+      "colors": [
+        "--color-primary: #5956E9",
+        "--color-white: #ffffff",
+        "--color-black: #000000",
+        "--color-light: #ECF2F6",
+        "--color-dark: #27272E",
+        "--color-text-dark: #292930",
+        "--color-accent1: #FFDC60",
+        "--color-accent2: #FAB8C4",
+        "--color-blue-shade: #6865FF",
+        "--color-link: #2522BA",
+        "--color-mabel: #DBF8FF",
+        "--color-fog: #DBDEFF",
+        "--color-pink-shade: #FFD3DB",
+        "--color-peach: #FFEDDC",
+        "--color-rose: #C75C6F"
+      ],
+      "fonts": [
+        "Font Awesome 6 Brands",
+        "Font Awesome 6 Duotone",
+        "Font Awesome 6 Pro",
+        "Font Awesome 5 Brands",
+        "Font Awesome 5 Pro"
+      ],
+      "layout_features": [
+        "preloader",
+        "back_to_top",
+        "dark_mode_toggle",
+        "animated_counters",
+        "slider",
+        "sticky_header"
+      ],
+      "accessible": true,
+      "error": null
+    },
+    {
+      "title": "Runok - Web Agency (RRDevs)",
+      "url": "https://html.rrdevs.net/runok/",
+      "js_libs": [
+        "gsap",
+        "swiper",
+        "isotope"
+      ],
+      "css_effects": [
+        "reveal",
+        "counter"
+      ],
+      "animations": [
+        "progress-bar-stripes",
+        "spinner-border",
+        "spinner-grow",
+        "placeholder-glow",
+        "placeholder-wave",
+        "fa-beat",
+        "fa-bounce",
+        "fa-fade",
+        "fa-beat-fade",
+        "fa-flip",
+        "fa-shake",
+        "fa-spin",
+        "sk-plane",
+        "sk-chase",
+        "sk-chase-dot",
+        "sk-chase-dot-before",
+        "sk-bounce",
+        "sk-wave",
+        "sk-pulse",
+        "sk-flow"
+      ],
+      "colors": [],
+      "fonts": [
+        "Font Awesome 6 Brands",
+        "Font Awesome 6 Duotone",
+        "Font Awesome 6 Pro",
+        "Font Awesome 5 Brands",
+        "Font Awesome 5 Pro"
+      ],
+      "layout_features": [
+        "preloader",
+        "custom_cursor",
+        "dark_mode_toggle",
+        "slider",
+        "sticky_header"
+      ],
+      "accessible": true,
+      "error": null
+    },
+    {
+      "title": "Abstrak Digital Agency v2 (AxilThemes)",
+      "url": "https://new.axilthemes.com/demo/template/abstrak/index-1.html",
+      "js_libs": [
+        "isotope"
+      ],
+      "css_effects": [
+        "counter",
+        "sticky"
+      ],
+      "animations": [
+        "progress-bar-stripes",
+        "spinner-border",
+        "spinner-grow",
+        "placeholder-glow",
+        "placeholder-wave",
+        "fa-beat",
+        "fa-bounce",
+        "fa-fade",
+        "fa-beat-fade",
+        "fa-flip",
+        "fa-shake",
+        "fa-spin",
+        "spin",
+        "movingleftright1",
+        "movingleftright2",
+        "movingleftright3",
+        "shine",
+        "headerSlideDown"
+      ],
+      "colors": [
+        "--color-primary: #5956E9",
+        "--color-white: #ffffff",
+        "--color-black: #000000",
+        "--color-light: #ECF2F6",
+        "--color-dark: #27272E",
+        "--color-text-dark: #292930",
+        "--color-accent1: #FFDC60",
+        "--color-accent2: #FAB8C4",
+        "--color-blue-shade: #6865FF",
+        "--color-link: #2522BA",
+        "--color-mabel: #DBF8FF",
+        "--color-fog: #DBDEFF",
+        "--color-pink-shade: #FFD3DB",
+        "--color-peach: #FFEDDC",
+        "--color-rose: #C75C6F"
+      ],
+      "fonts": [
+        "Font Awesome 6 Brands",
+        "Font Awesome 6 Duotone",
+        "Font Awesome 6 Pro",
+        "Font Awesome 5 Brands",
+        "Font Awesome 5 Pro"
+      ],
+      "layout_features": [
+        "preloader",
+        "back_to_top",
+        "dark_mode_toggle",
+        "animated_counters",
+        "slider",
+        "sticky_header"
+      ],
+      "accessible": true,
+      "error": null
+    },
+    {
+      "title": "Abstrak Creative v3 (AxilThemes)",
+      "url": "https://new.axilthemes.com/demo/template/abstrak/index-2.html",
+      "js_libs": [
+        "isotope"
+      ],
+      "css_effects": [
+        "counter",
+        "sticky"
+      ],
+      "animations": [
+        "progress-bar-stripes",
+        "spinner-border",
+        "spinner-grow",
+        "placeholder-glow",
+        "placeholder-wave",
+        "fa-beat",
+        "fa-bounce",
+        "fa-fade",
+        "fa-beat-fade",
+        "fa-flip",
+        "fa-shake",
+        "fa-spin",
+        "spin",
+        "movingleftright1",
+        "movingleftright2",
+        "movingleftright3",
+        "shine",
+        "headerSlideDown"
+      ],
+      "colors": [
+        "--color-primary: #5956E9",
+        "--color-white: #ffffff",
+        "--color-black: #000000",
+        "--color-light: #ECF2F6",
+        "--color-dark: #27272E",
+        "--color-text-dark: #292930",
+        "--color-accent1: #FFDC60",
+        "--color-accent2: #FAB8C4",
+        "--color-blue-shade: #6865FF",
+        "--color-link: #2522BA",
+        "--color-mabel: #DBF8FF",
+        "--color-fog: #DBDEFF",
+        "--color-pink-shade: #FFD3DB",
+        "--color-peach: #FFEDDC",
+        "--color-rose: #C75C6F"
+      ],
+      "fonts": [
+        "Font Awesome 6 Brands",
+        "Font Awesome 6 Duotone",
+        "Font Awesome 6 Pro",
+        "Font Awesome 5 Brands",
+        "Font Awesome 5 Pro"
+      ],
+      "layout_features": [
+        "preloader",
+        "back_to_top",
+        "dark_mode_toggle",
+        "animated_counters",
+        "sticky_header"
+      ],
+      "accessible": true,
+      "error": null
+    },
+    {
+      "title": "Dixor Landing Page (ValidThemes)",
+      "url": "https://validthemes.net/site-template/landing-page/dixor/index.html",
+      "js_libs": [
+        "gsap",
+        "scrolltrigger",
+        "splittext",
+        "isotope"
+      ],
+      "css_effects": [
+        "smooth_scroll"
+      ],
+      "animations": [
+        "progress-bar-stripes",
+        "spinner-border",
+        "spinner-grow",
+        "placeholder-glow",
+        "placeholder-wave",
+        "fa-spin",
+        "fadeOut",
+        "bounce",
+        "flash",
+        "pulse",
+        "shake",
+        "swing",
+        "tada",
+        "wobble",
+        "bounceIn",
+        "bounceInDown",
+        "bounceInLeft",
+        "bounceInRight",
+        "bounceInUp",
+        "bounceOut"
+      ],
+      "colors": [
+        "--dark: #040836",
+        "--dark-secondary: #202942",
+        "--color-primary: #c9f31d",
+        "--color-secondary: #add40c",
+        "--color-heading: #202942",
+        "--color-paragraph: #666666",
+        "--bg-gray: #f0f3f4",
+        "--bg-gradient: linear-gradient(30deg, var(\r\n\t--color-secondary) 0%, var(--color-primary) 50%)"
+      ],
+      "fonts": [
+        "Font Awesome 5 Brands",
+        "Font Awesome 5 Duotone",
+        "Font Awesome 5 Pro"
+      ],
+      "layout_features": [
+        "custom_cursor",
+        "typed_text",
+        "slider",
+        "sticky_header"
+      ],
+      "accessible": true,
+      "error": null
+    },
+    {
+      "title": "Webteck - IT Solution (Themeholy)",
+      "url": "https://html.themeholy.com/webteck/demo/",
+      "js_libs": [],
+      "css_effects": [],
+      "animations": [],
+      "colors": [],
+      "fonts": [],
+      "layout_features": [],
+      "accessible": true,
+      "error": null
+    },
+    {
+      "title": "Saor - SEO Agency (Themeholy)",
+      "url": "https://html.themeholy.com/saor/demo/",
+      "js_libs": [],
+      "css_effects": [],
+      "animations": [],
+      "colors": [],
+      "fonts": [],
+      "layout_features": [],
+      "accessible": true,
+      "error": null
+    }
+  ]
+}

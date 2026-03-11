@@ -1,0 +1,58 @@
+---
+interface Props {
+  words: string[];
+  speed?: number;
+  deleteSpeed?: number;
+  pause?: number;
+}
+const { words, speed = 80, deleteSpeed = 50, pause = 1800 } = Astro.props;
+---
+<span class="typed-text" data-words={JSON.stringify(words)} data-speed={speed} data-delete={deleteSpeed} data-pause={pause}>
+  <span class="typed-text__word"></span>
+  <span class="typed-text__cursor" aria-hidden="true">|</span>
+</span>
+
+<style>
+  .typed-text { display: inline-flex; align-items: center; gap: 2px; }
+  .typed-text__word { color: var(--color-accent, #f97316); font-weight: inherit; }
+  .typed-text__cursor {
+    color: var(--color-accent, #f97316);
+    animation: blink 0.8s ease-in-out infinite;
+    font-weight: 300;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.typed-text').forEach(container => {
+    const words: string[] = JSON.parse(container.dataset.words || '[]');
+    const speed = parseInt(container.dataset.speed || '80');
+    const del = parseInt(container.dataset.delete || '50');
+    const pause = parseInt(container.dataset.pause || '1800');
+    const wordEl = container.querySelector<HTMLElement>('.typed-text__word');
+    if (!wordEl || words.length === 0) return;
+
+    let wordIndex = 0, charIndex = 0, deleting = false;
+
+    function type() {
+      const current = words[wordIndex];
+      if (!deleting) {
+        wordEl!.textContent = current.slice(0, ++charIndex);
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(type, pause);
+          return;
+        }
+        setTimeout(type, speed);
+      } else {
+        wordEl!.textContent = current.slice(0, --charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+        }
+        setTimeout(type, del);
+      }
+    }
+    setTimeout(type, 500);
+  });
+</script>

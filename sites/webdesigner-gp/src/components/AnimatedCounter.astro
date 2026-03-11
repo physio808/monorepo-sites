@@ -1,0 +1,59 @@
+---
+interface Props {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  label: string;
+  duration?: number;
+}
+const { value, suffix = '', prefix = '', label, duration = 2000 } = Astro.props;
+---
+<div class="counter" data-counter data-target={value} data-duration={duration}>
+  <div class="counter__value">
+    <span class="counter__prefix">{prefix}</span>
+    <span class="counter__number">0</span>
+    <span class="counter__suffix">{suffix}</span>
+  </div>
+  <p class="counter__label">{label}</p>
+</div>
+
+<style>
+  .counter { text-align: center; padding: 1.5rem; }
+  .counter__value { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; color: var(--color-primary, #0e7490); line-height: 1; margin-bottom: 0.5rem; }
+  .counter__prefix, .counter__suffix { font-size: 0.6em; }
+  .counter__label { color: #64748b; font-size: 0.9rem; font-weight: 500; }
+</style>
+
+<script>
+  function animateCounter(el: HTMLElement) {
+    const target = parseInt(el.dataset.target || '0');
+    const duration = parseInt(el.dataset.duration || '2000');
+    const numEl = el.querySelector('.counter__number');
+    if (!numEl) return;
+
+    let start = 0;
+    const startTime = performance.now();
+
+    function update(currentTime: number) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeOutExpo
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = Math.floor(ease * target);
+      numEl.textContent = current.toLocaleString('fr-FR');
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll<HTMLElement>('[data-counter]').forEach(el => observer.observe(el));
+</script>

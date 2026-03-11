@@ -1,0 +1,64 @@
+---
+// Scroll reveal animations (GSAP ScrollTrigger pattern — 3/8 sites)
+// Utilise CSS pur + IntersectionObserver pour économiser les tokens/bundle
+---
+<style is:global>
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-reveal="left"] { transform: translateX(-50px); }
+  [data-reveal="right"] { transform: translateX(50px); }
+  [data-reveal="scale"] { transform: scale(0.85); }
+  [data-reveal="fade"] { transform: none; }
+
+  [data-reveal].revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Délai via data-delay="100" (ms) */
+  [data-reveal][data-delay="100"].revealed { transition-delay: 0.1s; }
+  [data-reveal][data-delay="200"].revealed { transition-delay: 0.2s; }
+  [data-reveal][data-delay="300"].revealed { transition-delay: 0.3s; }
+  [data-reveal][data-delay="400"].revealed { transition-delay: 0.4s; }
+  [data-reveal][data-delay="500"].revealed { transition-delay: 0.5s; }
+  [data-reveal][data-delay="600"].revealed { transition-delay: 0.6s; }
+
+  /* Stagger enfants automatique */
+  [data-stagger] > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-stagger].revealed > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s; }
+  [data-stagger].revealed > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.15s; }
+  [data-stagger].revealed > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.25s; }
+  [data-stagger].revealed > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.35s; }
+  [data-stagger].revealed > *:nth-child(5) { opacity:1; transform:none; transition-delay: 0.45s; }
+  [data-stagger].revealed > *:nth-child(6) { opacity:1; transform:none; transition-delay: 0.55s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal], [data-stagger] > * {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('[data-reveal], [data-stagger]').forEach(el => observer.observe(el));
+</script>
