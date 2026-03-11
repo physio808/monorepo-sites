@@ -30,9 +30,11 @@ const pathname = Astro.url.pathname
   <SEO {...props} />
   <ViewTransitions />
   <link rel="stylesheet" href="/dark-mode.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <style is:global>
-    @import '@fontsource/plus-jakarta-sans/index.css';
+    @import '@fontsource/plus-jakarta-sans/latin-400.css';
+    @import '@fontsource/plus-jakarta-sans/latin-600.css';
+    @import '@fontsource/plus-jakarta-sans/latin-700.css';
+    @import '@fontsource/plus-jakarta-sans/latin-800.css';
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --color-primary: #0e7490;

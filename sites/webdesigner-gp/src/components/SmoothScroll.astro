@@ -5,9 +5,12 @@
   import Lenis from 'lenis';
 
   let lenis: InstanceType<typeof Lenis> | null = null;
+  let rafId: number | null = null;
 
   function initLenis() {
     lenis?.destroy();
+    if (rafId !== null) cancelAnimationFrame(rafId);
+
     lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -17,9 +20,9 @@
 
     function raf(time: number) {
       lenis!.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
   }
 
   // Init au premier chargement
@@ -27,5 +30,8 @@
 
   // Réinit à chaque navigation Astro
   document.addEventListener('astro:page-load', initLenis);
-  document.addEventListener('astro:before-swap', () => lenis?.destroy());
+  document.addEventListener('astro:before-swap', () => {
+    lenis?.destroy();
+    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+  });
 </script>
