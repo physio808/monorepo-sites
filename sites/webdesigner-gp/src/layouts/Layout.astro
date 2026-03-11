@@ -4,7 +4,6 @@ import ScrollReveal from '../components/ScrollReveal.astro'
 import ScrollProgress from '../components/ScrollProgress.astro'
 import Preloader from '../components/Preloader.astro'
 import BackToTop from '../components/BackToTop.astro'
-import CustomCursor from '../components/CustomCursor.astro'
 import DarkModeToggle from '../components/DarkModeToggle.astro'
 import SmoothScroll from '../components/SmoothScroll.astro'
 import AnimationEngine from '../components/AnimationEngine.astro'
@@ -52,8 +51,7 @@ const pathname = Astro.url.pathname
       --max-w: 1200px;
     }
     html { font-family: var(--font-sans); color: var(--color-text); background: var(--color-bg); scroll-behavior: smooth; }
-    body { min-height: 100vh; display: flex; flex-direction: column; cursor: none; }
-    @media (hover: none) { body { cursor: auto; } }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
     main { flex: 1; }
     img { max-width: 100%; height: auto; }
     a { color: inherit; text-decoration: none; }
@@ -233,7 +231,6 @@ const pathname = Astro.url.pathname
 
   <Preloader />
   <BackToTop />
-  <CustomCursor />
   <SmoothScroll />
   <AnimationEngine />
 
