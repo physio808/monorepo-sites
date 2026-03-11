@@ -172,14 +172,92 @@ const services = [
     />
   </section>
 
-  <!-- ═══ STATS ═══ -->
+  <!-- ═══ STATS FLIP CARDS ═══ -->
   <section class="stats-section">
     <div class="container">
+      <p class="stats-headline" data-gsap="fade-up">Des résultats que vous pouvez mesurer</p>
       <div class="stats-grid" data-gsap-stagger>
-        <AnimatedCounter value={50} suffix="+" label="Sites créés en Guadeloupe" />
-        <AnimatedCounter value={98} suffix="%" label="Clients satisfaits" />
-        <AnimatedCounter value={5} suffix=" ans" label="d'expérience web" />
-        <AnimatedCounter value={24} suffix="h" label="Délai de réponse devis" />
+
+        <div class="stat-flip" tabindex="0" aria-label="50+ sites créés — cliquer pour en savoir plus">
+          <div class="stat-flip__inner">
+            <div class="stat-flip__front">
+              <div class="stat-flip__icon-wrap">🏝️</div>
+              <div class="stat-flip__number" aria-live="polite">
+                <span class="stat-count" data-target="50" data-suffix="+">0+</span>
+              </div>
+              <p class="stat-flip__label">Sites créés en Guadeloupe</p>
+              <div class="stat-flip__bar"><div class="stat-flip__bar-fill" style="--pct:85%"></div></div>
+              <span class="stat-flip__hint">Cliquer pour les secteurs →</span>
+            </div>
+            <div class="stat-flip__back">
+              <div class="stat-back__icon">🏆</div>
+              <p class="stat-back__title">Restaurants · Médecins · Artisans · Avocats · Hôtels · E-commerce</p>
+              <p class="stat-back__text">Chaque secteur, une stratégie web adaptée aux habitudes locales guadeloupéennes.</p>
+              <a href="/portfolio/" class="stat-back__cta">Voir le portfolio →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-flip" tabindex="0" aria-label="98% clients satisfaits — cliquer pour témoignage">
+          <div class="stat-flip__inner">
+            <div class="stat-flip__front">
+              <div class="stat-flip__icon-wrap">⭐</div>
+              <div class="stat-flip__number">
+                <span class="stat-count" data-target="98" data-suffix="%">0%</span>
+              </div>
+              <p class="stat-flip__label">Clients satisfaits</p>
+              <div class="stat-flip__bar"><div class="stat-flip__bar-fill" style="--pct:98%"></div></div>
+              <span class="stat-flip__hint">Cliquer pour un témoignage →</span>
+            </div>
+            <div class="stat-flip__back">
+              <div class="stat-back__icon">💬</div>
+              <p class="stat-back__quote">"Site livré en 4 semaines, 3× plus de contacts depuis la mise en ligne."</p>
+              <p class="stat-back__author">— Restaurant Le Lagon, Pointe-à-Pitre</p>
+              <a href="/a-propos/" class="stat-back__cta">Tous les avis →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-flip" tabindex="0" aria-label="5 ans d'expérience — cliquer pour en savoir plus">
+          <div class="stat-flip__inner">
+            <div class="stat-flip__front">
+              <div class="stat-flip__icon-wrap">🚀</div>
+              <div class="stat-flip__number">
+                <span class="stat-count" data-target="5" data-suffix=" ans">0 ans</span>
+              </div>
+              <p class="stat-flip__label">d'expérience web</p>
+              <div class="stat-flip__bar"><div class="stat-flip__bar-fill" style="--pct:70%"></div></div>
+              <span class="stat-flip__hint">Cliquer pour le parcours →</span>
+            </div>
+            <div class="stat-flip__back">
+              <div class="stat-back__icon">📅</div>
+              <p class="stat-back__title">Depuis 2019</p>
+              <p class="stat-back__text">Web designer certifié, formé aux dernières technologies Astro, Cloudflare & SEO local Caraïbes.</p>
+              <a href="/a-propos/" class="stat-back__cta">Mon parcours →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-flip" tabindex="0" aria-label="Réponse en 24h — cliquer pour demander un devis">
+          <div class="stat-flip__inner">
+            <div class="stat-flip__front">
+              <div class="stat-flip__icon-wrap">⚡</div>
+              <div class="stat-flip__number">
+                <span class="stat-count" data-target="24" data-suffix="h">0h</span>
+              </div>
+              <p class="stat-flip__label">Délai de réponse devis</p>
+              <div class="stat-flip__bar"><div class="stat-flip__bar-fill" style="--pct:100%"></div></div>
+              <span class="stat-flip__hint">Cliquer pour votre devis →</span>
+            </div>
+            <div class="stat-flip__back stat-flip__back--accent">
+              <div class="stat-back__icon">📩</div>
+              <p class="stat-back__title">Devis gratuit & personnalisé</p>
+              <p class="stat-back__text">Décrivez votre projet, recevez une proposition détaillée sous 24h. Sans engagement.</p>
+              <a href="/contact/" class="stat-back__cta stat-back__cta--white">Demander maintenant →</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -192,17 +270,18 @@ const services = [
         <h2 data-split style="margin-top:1rem;">Création de sites internet en Guadeloupe</h2>
         <p style="margin-top:1rem;">Du site vitrine au e-commerce, j'accompagne les entrepreneurs guadeloupéens dans leur présence en ligne.</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;" data-stagger>
+      <div class="services-grid" data-gsap-stagger>
         {services.map(s => (
-          <article style="border:1px solid var(--color-border);border-radius:var(--radius);padding:2rem;transition:box-shadow 0.2s;position:relative;overflow:hidden;">
-            <span style="font-size:2.5rem;">{s.icon}</span>
-            <h3 style="margin:1rem 0 0.75rem;color:var(--color-text);">{s.title}</h3>
-            <p style="font-size:0.9rem;margin-bottom:1.25rem;">{s.desc}</p>
-            <p style="font-weight:700;color:var(--color-primary);font-size:0.95rem;margin-bottom:1.25rem;">{s.price}</p>
-            <a href={s.href} style="color:var(--color-primary);font-weight:600;font-size:0.9rem;display:flex;align-items:center;gap:0.25rem;">
-              En savoir plus →
-            </a>
-          </article>
+          <a href={s.href} class="service-card" data-tilt>
+            <div class="service-card__glow" aria-hidden="true"></div>
+            <div class="service-card__icon">{s.icon}</div>
+            <h3 class="service-card__title">{s.title}</h3>
+            <p class="service-card__desc">{s.desc}</p>
+            <div class="service-card__footer">
+              <span class="service-card__price">{s.price}</span>
+              <span class="service-card__arrow">→</span>
+            </div>
+          </a>
         ))}
       </div>
     </div>
@@ -602,15 +681,182 @@ const services = [
 }
 
 /* ══════════════════════════════
-   STATS
+   STATS FLIP CARDS
 ══════════════════════════════ */
-.stats-section {
-  padding: 4rem 0;
+.stats-section { padding: 5rem 0; background: var(--color-bg-alt); }
+.stats-headline {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-light);
+  margin-bottom: 3rem;
 }
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
+}
+
+/* Flip card container */
+.stat-flip {
+  perspective: 1000px;
+  height: 240px;
+  cursor: pointer;
+  outline: none;
+}
+.stat-flip:focus-visible .stat-flip__inner { transform: rotateY(180deg); }
+.stat-flip__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+.stat-flip:hover .stat-flip__inner { transform: rotateY(180deg); }
+.stat-flip.flipped .stat-flip__inner { transform: rotateY(180deg); }
+
+.stat-flip__front,
+.stat-flip__back {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.stat-flip__front {
+  background: white;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s;
+}
+.stat-flip:hover .stat-flip__front { box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.stat-flip__back {
+  background: var(--color-primary);
+  color: white;
+  transform: rotateY(180deg);
+}
+.stat-flip__back--accent { background: var(--color-accent, #f97316); }
+
+.stat-flip__icon-wrap { font-size: 1.75rem; margin-bottom: 0.75rem; line-height: 1; }
+.stat-flip__number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-flip__label { font-size: 0.8rem; color: var(--color-text-light); margin-bottom: 0.75rem; font-weight: 500; }
+.stat-flip__bar {
+  width: 100%;
+  height: 3px;
+  background: var(--color-border);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+.stat-flip__bar-fill {
+  height: 100%;
+  width: var(--pct, 0%);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 99px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
+}
+.stat-flip.in-view .stat-flip__bar-fill { transform: scaleX(1); }
+.stat-flip__hint { font-size: 0.7rem; color: var(--color-text-light); opacity: 0.6; }
+
+/* Back face */
+.stat-back__icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.stat-back__title { font-weight: 700; font-size: 0.9rem; color: rgba(255,255,255,0.95); margin-bottom: 0.5rem; line-height: 1.4; }
+.stat-back__quote { font-style: italic; font-size: 0.85rem; color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 0.4rem; }
+.stat-back__author { font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-bottom: 0.75rem; }
+.stat-back__text { font-size: 0.82rem; color: rgba(255,255,255,0.8); line-height: 1.5; margin-bottom: 0.75rem; }
+.stat-back__cta {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(255,255,255,0.2);
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.stat-back__cta:hover { background: rgba(255,255,255,0.35); }
+.stat-back__cta--white { background: white; color: var(--color-accent); }
+.stat-back__cta--white:hover { background: rgba(255,255,255,0.9); }
+
+/* ══════════════════════════════
+   SERVICES CARDS PREMIUM
+══════════════════════════════ */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: white;
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.service-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 60px rgba(14,116,144,0.15);
+}
+.service-card__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(14,116,144,0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.service-card:hover .service-card__glow { opacity: 1; }
+.service-card__icon { font-size: 2.5rem; margin-bottom: 1.25rem; line-height: 1; transition: transform 0.4s; }
+.service-card:hover .service-card__icon { transform: scale(1.15) translateY(-2px); }
+.service-card__title { font-size: 1.15rem; font-weight: 700; color: var(--color-text); margin-bottom: 0.75rem; }
+.service-card__desc { font-size: 0.875rem; color: var(--color-text-light); line-height: 1.6; flex: 1; margin-bottom: 1.5rem; }
+.service-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+}
+.service-card__price { font-weight: 700; color: var(--color-primary); font-size: 0.9rem; }
+.service-card__arrow {
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  transition: background 0.2s, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.service-card:hover .service-card__arrow {
+  background: var(--color-primary);
+  color: white;
+  transform: translateX(3px);
 }
 
 /* ══════════════════════════════
@@ -685,21 +931,94 @@ const services = [
   .hero__visual { display: none; }
   .hero__ctas { flex-direction: column; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-flip { height: 220px; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-flip { height: 200px; }
+  .stat-flip__front, .stat-flip__back { padding: 1.25rem; }
+  .stat-flip__number { font-size: 2rem; }
 }
 </style>
 
 <script>
-  // 3D tilt sur hero card
-  const card = document.getElementById('hero-tilt');
-  if (card && window.matchMedia('(hover: hover)').matches) {
-    card.addEventListener('mousemove', (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect();
+  // ── Hero card 3D tilt ───────────────────────────────────
+  const heroCard = document.getElementById('hero-tilt');
+  if (heroCard && window.matchMedia('(hover: hover)').matches) {
+    heroCard.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = heroCard.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.02)`;
+      heroCard.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.02)`;
     });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
+    heroCard.addEventListener('mouseleave', () => { heroCard.style.transform = ''; });
   }
+
+  // ── Stat flip cards: Intersection Observer (progress bar + counter) ──
+  const statFlips = document.querySelectorAll<HTMLElement>('.stat-flip');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target as HTMLElement;
+      el.classList.add('in-view');
+
+      // Counter animation
+      const countEl = el.querySelector<HTMLElement>('.stat-count');
+      if (!countEl) return;
+      const target = parseInt(countEl.dataset.target || '0');
+      const suffix = countEl.dataset.suffix || '';
+      let start = 0;
+      const duration = 1800;
+      const startTime = performance.now();
+      function tick(now: number) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        const current = Math.floor(eased * target);
+        countEl.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+        else countEl.textContent = target + suffix;
+      }
+      requestAnimationFrame(tick);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+
+  statFlips.forEach(el => observer.observe(el));
+
+  // ── Stat flip: click/touch toggle (mobile) ──────────────
+  statFlips.forEach(el => {
+    el.addEventListener('click', () => {
+      el.classList.toggle('flipped');
+    });
+    el.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.classList.toggle('flipped');
+      }
+    });
+  });
+
+  // ── Service cards: spotlight glow follows mouse ──────────
+  document.querySelectorAll<HTMLElement>('.service-card').forEach(card => {
+    card.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width) * 100;
+      const my = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mx', mx + '%');
+      card.style.setProperty('--my', my + '%');
+    });
+
+    // Tilt effect on service cards
+    if (window.matchMedia('(hover: hover)').matches) {
+      card.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    }
+  });
 </script>
