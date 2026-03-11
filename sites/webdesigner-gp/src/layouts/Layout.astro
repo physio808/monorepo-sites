@@ -4,8 +4,10 @@ import ScrollReveal from '../components/ScrollReveal.astro'
 import ScrollProgress from '../components/ScrollProgress.astro'
 import Preloader from '../components/Preloader.astro'
 import BackToTop from '../components/BackToTop.astro'
-import CustomCursor from '../components/CustomCursor.astro'
+import FluidCursor from '../components/FluidCursor.astro'
 import DarkModeToggle from '../components/DarkModeToggle.astro'
+import SmoothScroll from '../components/SmoothScroll.astro'
+import AnimationEngine from '../components/AnimationEngine.astro'
 import { ViewTransitions } from 'astro:transitions'
 
 interface Props {
@@ -28,7 +30,9 @@ const pathname = Astro.url.pathname
   <SEO {...props} />
   <ViewTransitions />
   <link rel="stylesheet" href="/dark-mode.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <style is:global>
+    @import '@fontsource/plus-jakarta-sans/index.css';
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --color-primary: #0e7490;
@@ -39,7 +43,7 @@ const pathname = Astro.url.pathname
       --color-bg: #ffffff;
       --color-bg-alt: #f8fafc;
       --color-border: #e2e8f0;
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-sans: 'Plus Jakarta Sans Variable', 'Inter', system-ui, -apple-system, sans-serif;
       --radius: 0.75rem;
       --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
       --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
@@ -227,7 +231,9 @@ const pathname = Astro.url.pathname
 
   <Preloader />
   <BackToTop />
-  <CustomCursor />
+  <FluidCursor />
+  <SmoothScroll />
+  <AnimationEngine />
 
   <style>
     /* ── Header ── */

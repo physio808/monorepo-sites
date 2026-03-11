@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro'
 import TypedText from '../components/TypedText.astro'
 import AnimatedCounter from '../components/AnimatedCounter.astro'
+import MagneticButton from '../components/MagneticButton.astro'
+import Marquee from '../components/Marquee.astro'
 
 const jsonLd = [
   {
@@ -62,57 +64,118 @@ const services = [
 >
 
   <!-- ═══ HERO ═══ -->
-  <section style="background:linear-gradient(135deg,#0c4a6e 0%,#0e7490 50%,#0891b2 100%);color:white;padding:6rem 0 5rem;position:relative;overflow:hidden;">
-    <div style="position:absolute;inset:0;background:url('/grid.svg') center/60px repeat;opacity:0.07;"></div>
-    <div class="container" style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
-      <div>
-        <p class="badge" style="background:rgba(249,115,22,0.2);color:#fed7aa;margin-bottom:1.25rem;">
-          🌴 Web Designer — Guadeloupe
-        </p>
-        <h1 style="color:white;margin-bottom:1.25rem;line-height:1.1;">
-          Je suis <TypedText words={["Web Designer", "Développeur Web", "Expert SEO", "Créatif"]} /><br />
-          <span style="color:#7dd3fc;">en Guadeloupe</span>
+  <section class="hero" id="hero">
+    <!-- Noise texture overlay -->
+    <div class="hero__noise" aria-hidden="true"></div>
+    <!-- Floating shapes -->
+    <div class="hero__shape hero__shape--1" aria-hidden="true" data-parallax="0.2"></div>
+    <div class="hero__shape hero__shape--2" aria-hidden="true" data-parallax="0.35"></div>
+    <div class="hero__shape hero__shape--3" aria-hidden="true" data-parallax="0.15"></div>
+
+    <div class="container hero__grid">
+      <div class="hero__content">
+        <div class="hero__eyebrow" data-gsap="fade-up">
+          <span class="hero__dot" aria-hidden="true"></span>
+          Web Designer · Guadeloupe
+        </div>
+
+        <h1 class="hero__title" data-split>
+          Je crée des sites qui convertissent
         </h1>
-        <p style="color:#bae6fd;font-size:1.125rem;margin-bottom:2rem;line-height:1.7;">
-          Vous avez besoin d'un site internet professionnel en Guadeloupe ?
-          Je crée des sites rapides, beaux et optimisés SEO pour que vos clients vous trouvent sur Google.
+
+        <p class="hero__lead" data-gsap="fade-up">
+          Sites vitrine, e-commerce et SEO local pour entrepreneurs en Guadeloupe.
+          Votre client vous cherche sur Google — je m'assure qu'il vous trouve.
         </p>
-        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-          <a href="/contact/" class="btn btn-primary" style="background:var(--color-accent);border-color:var(--color-accent);">
+
+        <div class="hero__ctas" data-gsap="fade-up">
+          <MagneticButton href="/contact/" variant="accent" size="lg">
             Devis gratuit en 24h →
-          </a>
-          <a href="/portfolio/" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;">
+          </MagneticButton>
+          <MagneticButton href="/portfolio/" variant="outline" size="lg">
             Voir mes réalisations
-          </a>
+          </MagneticButton>
         </div>
-        <p style="margin-top:1.5rem;font-size:0.85rem;color:#93c5fd;">
-          ✓ Réponse sous 24h &nbsp;·&nbsp; ✓ Devis gratuit &nbsp;·&nbsp; ✓ Sans engagement
-        </p>
+
+        <div class="hero__trust" data-gsap="fade-up">
+          <div class="hero__trust-item"><span>✓</span> Réponse sous 24h</div>
+          <div class="hero__trust-item"><span>✓</span> Sans engagement</div>
+          <div class="hero__trust-item"><span>✓</span> 50+ sites livrés</div>
+        </div>
       </div>
-      <div style="display:flex;justify-content:center;">
-        <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:1.5rem;padding:2rem;border:1px solid rgba(255,255,255,0.2);max-width:400px;width:100%;">
-          <div style="background:rgba(255,255,255,0.05);border-radius:0.75rem;padding:1.25rem;margin-bottom:1rem;">
-            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
-              <div style="width:12px;height:12px;border-radius:50%;background:#ef4444;"></div>
-              <div style="width:12px;height:12px;border-radius:50%;background:#f59e0b;"></div>
-              <div style="width:12px;height:12px;border-radius:50%;background:#10b981;"></div>
-            </div>
-            <div style="height:8px;background:rgba(255,255,255,0.15);border-radius:4px;margin-bottom:8px;width:80%;"></div>
-            <div style="height:8px;background:rgba(255,255,255,0.1);border-radius:4px;margin-bottom:8px;width:60%;"></div>
-            <div style="height:8px;background:rgba(255,255,255,0.1);border-radius:4px;width:70%;"></div>
+
+      <div class="hero__visual" data-gsap="fade-up">
+        <!-- Card mockup glassmorphism -->
+        <div class="hero__card" id="hero-tilt">
+          <div class="hero__card-header">
+            <span class="hero__card-dot" style="background:#ef4444"></span>
+            <span class="hero__card-dot" style="background:#f59e0b"></span>
+            <span class="hero__card-dot" style="background:#10b981"></span>
+            <span class="hero__card-url">webdesigner.sakaybrile.uk</span>
           </div>
-          <p style="text-align:center;font-weight:600;font-size:0.9rem;color:#e0f2fe;">
-            🚀 Score Lighthouse : 98/100
-          </p>
+          <div class="hero__card-score">
+            <div class="hero__score-ring">
+              <svg viewBox="0 0 60 60" aria-label="Score Lighthouse 98">
+                <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+                <circle cx="30" cy="30" r="24" fill="none" stroke="#10b981" stroke-width="4"
+                  stroke-dasharray="150.8" stroke-dashoffset="3" stroke-linecap="round"
+                  transform="rotate(-90 30 30)"/>
+              </svg>
+              <span>98</span>
+            </div>
+            <div>
+              <p class="hero__score-label">Lighthouse</p>
+              <p class="hero__score-sub">Performance</p>
+            </div>
+          </div>
+          <div class="hero__card-metrics">
+            <div class="hero__metric">
+              <span class="hero__metric-dot green"></span>
+              <span>LCP</span><strong>0.8s</strong>
+            </div>
+            <div class="hero__metric">
+              <span class="hero__metric-dot green"></span>
+              <span>CLS</span><strong>0.00</strong>
+            </div>
+            <div class="hero__metric">
+              <span class="hero__metric-dot green"></span>
+              <span>INP</span><strong>12ms</strong>
+            </div>
+          </div>
+          <div class="hero__card-badge">
+            <span>⚡</span> Optimisé Cloudflare
+          </div>
         </div>
+        <!-- Urgency badge -->
+        <div class="hero__urgency" aria-live="polite">
+          <span class="hero__urgency-dot" aria-hidden="true"></span>
+          <strong>2 créneaux</strong> disponibles ce mois
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero__scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="hero__scroll-arrow">
+        <svg width="16" height="24" viewBox="0 0 16 24"><path d="M8 0v20M1 13l7 7 7-7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
       </div>
     </div>
   </section>
 
+  <!-- ═══ MARQUEE CLIENTS ═══ -->
+  <section class="marquee-section" aria-label="Secteurs d'activité servis">
+    <Marquee
+      items={["Restaurants", "Artisans", "Médecins", "Avocats", "E-commerce", "Architectes", "Coaches", "Hôtels", "Photographes", "Consultants"]}
+      speed={25}
+      label="Secteurs clients"
+    />
+  </section>
+
   <!-- ═══ STATS ═══ -->
-  <section style="padding:3rem 0;border-bottom:1px solid var(--color-border);">
+  <section class="stats-section">
     <div class="container">
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;" data-stagger>
+      <div class="stats-grid" data-gsap-stagger>
         <AnimatedCounter value={50} suffix="+" label="Sites créés en Guadeloupe" />
         <AnimatedCounter value={98} suffix="%" label="Clients satisfaits" />
         <AnimatedCounter value={5} suffix=" ans" label="d'expérience web" />
@@ -124,9 +187,9 @@ const services = [
   <!-- ═══ SERVICES ═══ -->
   <section class="section" id="services">
     <div class="container">
-      <div style="text-align:center;max-width:600px;margin:0 auto 3rem;" data-reveal>
+      <div class="section-header" data-gsap="fade-up">
         <span class="badge">Mes services</span>
-        <h2 style="margin-top:1rem;">Création de sites internet en Guadeloupe</h2>
+        <h2 data-split style="margin-top:1rem;">Création de sites internet en Guadeloupe</h2>
         <p style="margin-top:1rem;">Du site vitrine au e-commerce, j'accompagne les entrepreneurs guadeloupéens dans leur présence en ligne.</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;" data-stagger>
@@ -214,14 +277,429 @@ const services = [
   </section>
 
   <!-- ═══ CTA FINAL ═══ -->
-  <section style="background:linear-gradient(135deg,var(--color-primary) 0%,var(--color-primary-dark) 100%);color:white;padding:5rem 0;text-align:center;">
-    <div class="container" style="max-width:600px;margin:0 auto;">
-      <h2 style="color:white;margin-bottom:1rem;">Prêt à lancer votre projet web en Guadeloupe ?</h2>
-      <p style="color:#bae6fd;margin-bottom:2rem;">Obtenez un devis gratuit et personnalisé sous 24h. Sans engagement.</p>
-      <a href="/contact/" class="btn btn-primary" style="background:var(--color-accent);border-color:var(--color-accent);font-size:1.1rem;padding:1rem 2.5rem;">
-        Demander mon devis gratuit →
-      </a>
+  <!-- ═══ CTA FINAL ═══ -->
+  <section class="cta-final">
+    <div class="cta-final__noise" aria-hidden="true"></div>
+    <div class="container">
+      <p class="cta-final__eyebrow" data-gsap="fade-up">Prêt à démarrer ?</p>
+      <h2 class="cta-final__title" data-split>Lançons votre projet ensemble</h2>
+      <p class="cta-final__sub" data-gsap="fade-up">Devis gratuit et personnalisé sous 24h. Sans engagement.</p>
+      <div data-gsap="fade-up" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem;">
+        <MagneticButton href="/contact/" variant="accent" size="lg">
+          Demander mon devis gratuit →
+        </MagneticButton>
+        <MagneticButton href="/a-propos/" variant="outline" size="lg">
+          En savoir plus
+        </MagneticButton>
+      </div>
+      <p class="cta-final__reassurance" data-gsap="fade-up">
+        ✓ Réponse sous 24h &nbsp;·&nbsp; ✓ 100% gratuit &nbsp;·&nbsp; ✓ Sans engagement &nbsp;·&nbsp; ✓ Basé en Guadeloupe
+      </p>
     </div>
   </section>
 
 </Layout>
+
+<style>
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, #070b14 0%, #0c1a2e 50%, #0e2038 100%);
+  color: white;
+  padding: 6rem 0 5rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Animated gradient background */
+@property --hero-angle {
+  syntax: '<angle>';
+  initial-value: 135deg;
+  inherits: false;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--hero-angle), rgba(14,116,144,0.15) 0%, rgba(249,115,22,0.06) 50%, rgba(14,116,144,0.1) 100%);
+  animation: hero-gradient 12s ease-in-out infinite alternate;
+}
+@keyframes hero-gradient {
+  to { --hero-angle: 225deg; }
+}
+
+/* Noise texture */
+.hero__noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating shapes */
+.hero__shape {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero__shape--1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(14,116,144,0.15), transparent 70%);
+  top: -150px; right: -100px;
+  animation: float1 8s ease-in-out infinite;
+}
+.hero__shape--2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(249,115,22,0.1), transparent 70%);
+  bottom: 50px; left: -50px;
+  animation: float2 10s ease-in-out infinite;
+}
+.hero__shape--3 {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(14,116,144,0.2), transparent 70%);
+  top: 30%; left: 40%;
+  animation: float1 6s ease-in-out infinite reverse;
+}
+@keyframes float1 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-30px) scale(1.05); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%       { transform: translateY(20px) translateX(15px); }
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* Eyebrow */
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.5rem;
+}
+.hero__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent, #f97316);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0.6); }
+  50%       { box-shadow: 0 0 0 8px rgba(249,115,22,0); }
+}
+
+.hero__title {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 800;
+  color: white;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.hero__lead {
+  color: rgba(255,255,255,0.65);
+  font-size: 1.15rem;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  max-width: 520px;
+}
+
+.hero__ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.hero__trust {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.hero__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+}
+.hero__trust-item span {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Hero visual card */
+.hero__visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero__card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  width: 100%;
+  max-width: 380px;
+  transition: transform 0.1s ease;
+  transform-style: preserve-3d;
+}
+
+.hero__card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.hero__card-dot { width: 12px; height: 12px; border-radius: 50%; }
+.hero__card-url {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  font-family: monospace;
+}
+
+.hero__card-score {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.hero__score-ring {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+.hero__score-ring svg { width: 60px; height: 60px; }
+.hero__score-ring span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+}
+.hero__score-label { font-weight: 700; color: white; font-size: 0.9rem; }
+.hero__score-sub { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+.hero__card-metrics {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.hero__metric {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+.hero__metric strong { color: white; font-weight: 700; }
+.hero__metric-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.hero__metric-dot.green { background: #10b981; }
+
+.hero__card-badge {
+  background: rgba(16,185,129,0.15);
+  color: #6ee7b7;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Urgency badge */
+.hero__urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 99px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+}
+.hero__urgency strong { color: var(--color-accent, #f97316); }
+.hero__urgency-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Scroll hint */
+.hero__scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.35);
+}
+.hero__scroll-arrow {
+  animation: bounce-arrow 2s ease-in-out infinite;
+}
+@keyframes bounce-arrow {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+/* ══════════════════════════════
+   MARQUEE SECTION
+══════════════════════════════ */
+.marquee-section {
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+/* ══════════════════════════════
+   STATS
+══════════════════════════════ */
+.stats-section {
+  padding: 4rem 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+/* ══════════════════════════════
+   SECTION HEADER
+══════════════════════════════ */
+.section-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 3.5rem;
+}
+
+/* ══════════════════════════════
+   CTA FINAL
+══════════════════════════════ */
+.cta-final {
+  background: linear-gradient(135deg, #070b14 0%, #0e2038 100%);
+  color: white;
+  padding: 7rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-final__noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+}
+.cta-final__eyebrow {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent, #f97316);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.cta-final__title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.cta-final__sub {
+  color: rgba(255,255,255,0.5);
+  font-size: 1.1rem;
+  position: relative;
+  z-index: 1;
+}
+.cta-final__reassurance {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .hero { min-height: auto; padding: 4rem 0 3rem; }
+  .hero__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .hero__visual { display: none; }
+  .hero__ctas { flex-direction: column; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+
+<script>
+  // 3D tilt sur hero card
+  const card = document.getElementById('hero-tilt');
+  if (card && window.matchMedia('(hover: hover)').matches) {
+    card.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  }
+</script>

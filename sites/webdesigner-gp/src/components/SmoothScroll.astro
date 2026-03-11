@@ -1,0 +1,31 @@
+---
+// Lenis smooth scroll — réinitialisé à chaque navigation Astro
+---
+<script>
+  import Lenis from 'lenis';
+
+  let lenis: InstanceType<typeof Lenis> | null = null;
+
+  function initLenis() {
+    lenis?.destroy();
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+    });
+
+    function raf(time: number) {
+      lenis!.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+
+  // Init au premier chargement
+  initLenis();
+
+  // Réinit à chaque navigation Astro
+  document.addEventListener('astro:page-load', initLenis);
+  document.addEventListener('astro:before-swap', () => lenis?.destroy());
+</script>

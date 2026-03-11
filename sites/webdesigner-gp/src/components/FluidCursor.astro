@@ -1,0 +1,79 @@
+---
+// Fluid cursor blob — remplace le curseur custom basique
+// Mix-blend-mode: difference sur sections sombres = effet premium
+---
+<div id="cursor-blob" aria-hidden="true">
+  <div id="cursor-blob__inner"></div>
+</div>
+
+<style>
+  #cursor-blob {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-accent, #f97316);
+    mix-blend-mode: difference;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    will-change: left, top;
+  }
+  #cursor-blob.expanded {
+    width: 80px;
+    height: 80px;
+  }
+  #cursor-blob.hidden {
+    opacity: 0;
+  }
+  @media (hover: none) {
+    #cursor-blob { display: none; }
+  }
+</style>
+
+<script>
+  const blob = document.getElementById('cursor-blob');
+  if (!blob || window.matchMedia('(hover: none)').matches) {
+    // skip on touch devices
+  } else {
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let bx = mx, by = my;
+
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      blob.classList.remove('hidden');
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => blob.classList.add('hidden'));
+    document.addEventListener('mouseenter', () => blob.classList.remove('hidden'));
+
+    // Expand on interactive elements
+    const expandTargets = 'a, button, [data-magnetic], input, textarea, select, label';
+    document.addEventListener('mouseover', (e) => {
+      if ((e.target as Element).closest(expandTargets)) {
+        blob.classList.add('expanded');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if ((e.target as Element).closest(expandTargets)) {
+        blob.classList.remove('expanded');
+      }
+    });
+
+    // Smooth lerp loop
+    const LERP = 0.1;
+    function loop() {
+      bx += (mx - bx) * LERP;
+      by += (my - by) * LERP;
+      blob.style.left = `${bx}px`;
+      blob.style.top = `${by}px`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+</script>

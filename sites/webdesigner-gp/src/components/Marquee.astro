@@ -1,0 +1,83 @@
+---
+interface Props {
+  items: string[];
+  speed?: number; // secondes pour un cycle
+  direction?: 'left' | 'right';
+  label?: string;
+}
+const { items, speed = 30, direction = 'left', label = 'Défiler' } = Astro.props;
+// Dupliquer pour seamless loop
+const doubled = [...items, ...items];
+---
+
+<div class="marquee" aria-label={label} role="marquee">
+  <div class={`marquee__track marquee__track--${direction}`} style={`--marquee-speed: ${speed}s`}>
+    {doubled.map((item, i) => (
+      <span class="marquee__item" aria-hidden={i >= items.length ? 'true' : 'false'}>
+        {item}
+        <span class="marquee__dot" aria-hidden="true">✦</span>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    width: 100%;
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+
+  .marquee__track {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .marquee__track--left {
+    animation: marquee-left var(--marquee-speed) linear infinite;
+  }
+  .marquee__track--right {
+    animation: marquee-right var(--marquee-speed) linear infinite;
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 600;
+    color: var(--color-text-light, #64748b);
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .marquee__item:hover {
+    color: var(--color-primary, #0e7490);
+  }
+
+  .marquee__dot {
+    font-size: 0.5em;
+    color: var(--color-accent, #f97316);
+    opacity: 0.7;
+  }
+
+  @keyframes marquee-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes marquee-right {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+  }
+</style>

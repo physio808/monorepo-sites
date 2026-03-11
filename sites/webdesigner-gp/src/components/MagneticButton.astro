@@ -1,0 +1,136 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'accent' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  external?: boolean;
+}
+const { href, variant = 'primary', size = 'md', class: className = '', external } = Astro.props;
+const Tag = href ? 'a' : 'button';
+const extraProps = href ? { href, ...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {}) } : {};
+---
+
+<Tag
+  {...extraProps}
+  class={`magnetic-btn magnetic-btn--${variant} magnetic-btn--${size} ${className}`}
+  data-magnetic
+>
+  <span class="magnetic-btn__inner">
+    <slot />
+  </span>
+  <span class="magnetic-btn__shine" aria-hidden="true"></span>
+</Tag>
+
+<style>
+  .magnetic-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: none;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.3s ease;
+    will-change: transform;
+    isolation: isolate;
+  }
+
+  /* Tailles */
+  .magnetic-btn--sm  { padding: 0.6rem 1.25rem; font-size: 0.875rem; }
+  .magnetic-btn--md  { padding: 0.875rem 2rem;   font-size: 1rem; }
+  .magnetic-btn--lg  { padding: 1.1rem 2.75rem;  font-size: 1.1rem; }
+
+  /* Variants */
+  .magnetic-btn--primary {
+    background: var(--color-primary, #0e7490);
+    color: white;
+    box-shadow: 0 4px 20px rgba(14,116,144,0.3);
+  }
+  .magnetic-btn--primary:hover {
+    box-shadow: 0 8px 40px rgba(14,116,144,0.5);
+  }
+  .magnetic-btn--accent {
+    background: var(--color-accent, #f97316);
+    color: white;
+    box-shadow: 0 4px 20px rgba(249,115,22,0.35);
+  }
+  .magnetic-btn--accent:hover {
+    box-shadow: 0 8px 40px rgba(249,115,22,0.55);
+  }
+  .magnetic-btn--outline {
+    background: transparent;
+    color: var(--color-primary, #0e7490);
+    border: 2px solid var(--color-primary, #0e7490);
+  }
+  .magnetic-btn--outline:hover {
+    background: var(--color-primary, #0e7490);
+    color: white;
+  }
+
+  /* Shine effect */
+  .magnetic-btn__shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: skewX(-20deg);
+    transition: left 0s;
+  }
+  .magnetic-btn:hover .magnetic-btn__shine {
+    left: 150%;
+    transition: left 0.6s ease;
+  }
+
+  .magnetic-btn__inner {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  @media (hover: none) {
+    .magnetic-btn { cursor: pointer; }
+  }
+</style>
+
+<script>
+  // Magnetic effect — tous les éléments [data-magnetic]
+  const STRENGTH = 0.35;
+  const RADIUS = 90;
+
+  document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach(btn => {
+    let isHovered = false;
+
+    btn.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < RADIUS) {
+        isHovered = true;
+        const tx = dx * STRENGTH;
+        const ty = dy * STRENGTH;
+        btn.style.transform = `translate(${tx}px, ${ty}px)`;
+        const inner = btn.querySelector('.magnetic-btn__inner') as HTMLElement | null;
+        if (inner) inner.style.transform = `translate(${tx * 0.3}px, ${ty * 0.3}px)`;
+      }
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      isHovered = false;
+      btn.style.transform = '';
+      const inner = btn.querySelector('.magnetic-btn__inner') as HTMLElement | null;
+      if (inner) inner.style.transform = '';
+    });
+  });
+</script>

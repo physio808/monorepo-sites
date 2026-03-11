@@ -1,0 +1,143 @@
+---
+// Animation Engine — GSAP + ScrollTrigger + SplitType
+// Centralise toutes les animations de la page
+---
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import SplitType from 'split-type';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initAnimations() {
+    // Nettoyer les animations précédentes (navigation Astro)
+    ScrollTrigger.getAll().forEach(t => t.kill());
+
+    // ── 1. SPLIT TEXT — H1, H2, H3 ─────────────────────────
+    document.querySelectorAll<HTMLElement>('[data-split]').forEach(el => {
+      const split = new SplitType(el, { types: 'words,chars' });
+      const target = el.dataset.split === 'chars' ? split.chars : split.words;
+      if (!target) return;
+
+      gsap.fromTo(target,
+        { y: '110%', opacity: 0 },
+        {
+          y: '0%',
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.04,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          }
+        }
+      );
+
+      // Wrapper pour éviter overflow visible
+      el.style.overflow = 'hidden';
+    });
+
+    // ── 2. FADE UP général ──────────────────────────────────
+    document.querySelectorAll<HTMLElement>('[data-gsap="fade-up"]').forEach(el => {
+      gsap.fromTo(el,
+        { y: 50, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          }
+        }
+      );
+    });
+
+    // ── 3. STAGGER CARDS ────────────────────────────────────
+    document.querySelectorAll<HTMLElement>('[data-gsap-stagger]').forEach(container => {
+      const children = Array.from(container.children) as HTMLElement[];
+      gsap.fromTo(children,
+        { y: 60, opacity: 0, scale: 0.95 },
+        {
+          y: 0, opacity: 1, scale: 1,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 85%',
+            once: true,
+          }
+        }
+      );
+    });
+
+    // ── 4. CLIP-PATH IMAGE REVEALS ──────────────────────────
+    document.querySelectorAll<HTMLElement>('[data-reveal-img]').forEach(el => {
+      gsap.fromTo(el,
+        { clipPath: 'inset(100% 0 0 0)' },
+        {
+          clipPath: 'inset(0% 0 0 0)',
+          duration: 1.2,
+          ease: 'power4.inOut',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          }
+        }
+      );
+    });
+
+    // ── 5. HORIZONTAL MARQUEE (rendu accessible) ────────────
+    // Géré par CSS pur (voir Marquee.astro)
+
+    // ── 6. PARALLAX SECTIONS ────────────────────────────────
+    document.querySelectorAll<HTMLElement>('[data-parallax]').forEach(el => {
+      const speed = parseFloat(el.dataset.parallax || '0.3');
+      gsap.to(el, {
+        yPercent: -100 * speed,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el.parentElement || el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        }
+      });
+    });
+
+    // ── 7. COUNTER ANIMÉ avec ScrollTrigger ─────────────────
+    document.querySelectorAll<HTMLElement>('[data-counter]').forEach(el => {
+      const target = parseInt(el.dataset.target || '0');
+      const numEl = el.querySelector('.counter__number');
+      if (!numEl) return;
+      let triggered = false;
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          if (triggered) return;
+          triggered = true;
+          gsap.to({ val: 0 }, {
+            val: target,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: function() {
+              numEl.textContent = Math.floor(this.targets()[0].val).toLocaleString('fr-FR');
+            }
+          });
+        }
+      });
+    });
+  }
+
+  // Init
+  initAnimations();
+  document.addEventListener('astro:page-load', initAnimations);
+</script>
